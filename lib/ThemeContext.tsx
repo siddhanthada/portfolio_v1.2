@@ -15,10 +15,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem('portfolio-theme') as Theme | null
-    const preferred = window.matchMedia('(prefers-color-scheme: light)').matches
-      ? 'light'
-      : 'dark'
-    const initial = stored ?? preferred
+    const initial = stored ?? 'dark'
     setTheme(initial)
     document.documentElement.setAttribute('data-theme', initial)
   }, [])
