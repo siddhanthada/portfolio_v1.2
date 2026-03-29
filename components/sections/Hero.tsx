@@ -494,6 +494,7 @@ export default function Hero() {
                     color: 'var(--text)',
                     letterSpacing: '-0.01em',
                     paddingBottom: '20px',
+                    paddingLeft: '4px',
                   }}
                 >
                   {renderChars('systems', charRefs, REF_START_2, false)}
@@ -560,6 +561,7 @@ export default function Hero() {
                     color: 'var(--text)',
                     letterSpacing: '-0.01em',
                     paddingBottom: '20px',
+                    paddingLeft: '4px',
                   }}
                 >
                   {renderCharsStatic('systems', false)}
