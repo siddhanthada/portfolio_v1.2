@@ -1,26 +1,192 @@
 @import "tailwindcss";
 
+/* ─── Design Tokens ──────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:         #080808;
+  --bg-card:    #111111;
+  --border:     #1E1E1E;
+  --text:       #F0EDE8;
+  --muted:      #717171;
+  --accent:     #C8FF00;
+  --accent-ring: rgba(200,255,0,0.4);
+
+  /* Typography — fluid scale */
+  --text-xs:    clamp(0.65rem, 1vw, 0.75rem);
+  --text-sm:    clamp(0.8rem, 1.2vw, 0.875rem);
+  --text-base:  clamp(0.9rem, 1.5vw, 1rem);
+  --text-lg:    clamp(1rem, 2vw, 1.25rem);
+  --text-xl:    clamp(1.2rem, 3vw, 1.75rem);
+  --text-2xl:   clamp(1.5rem, 4vw, 2.5rem);
+  --text-hero:  clamp(2.8rem, 7.5vw, 7.5rem);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Light Theme ────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:         #F4F1EC;
+  --bg-card:    #EAE6DF;
+  --border:     #D4CFC6;
+  --text:       #111111;
+  --muted:      #6B6660;
+  --accent:     #3D6B00;
+  --accent-ring: rgba(61,107,0,0.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+[data-theme="light"] .noise-overlay { opacity: 0.02; }
+[data-theme="light"] canvas { opacity: 0.4; }
+[data-theme="light"] .marquee-strip { border-color: var(--border); }
+
+/* ─── Container ──────────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
+/* ─── Ping animation (LiveStatus) ────────────────────────────────────────── */
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* ─── Reduced Motion Override ────────────────────────────────────────────── */
+[data-reduced-motion="true"] * {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* ─── Base Resets ────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+}
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Noise Texture ──────────────────────────────────────────────────────── */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+}
+
+/* ─── Marquee Animation ──────────────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee var(--marquee-speed, 40s) linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Underline Fill Animation ───────────────────────────────────────────── */
+.underline-fill {
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.underline-fill::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--accent);
+  transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.underline-fill:hover::after {
+  width: 100%;
+}
+
+/* ─── Email hover fill ───────────────────────────────────────────────────── */
+.email-link {
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.email-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.email-link:hover::after {
+  width: 100%;
+}
+
+/* ─── Pulsing dot ────────────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.75); }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
 }
