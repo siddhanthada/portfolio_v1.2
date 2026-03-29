@@ -99,6 +99,10 @@ export default function Customer360() {
   const [activeSection, setActiveSection] = useState('context')
   const [scrollProgress, setScrollProgress] = useState(0)
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   // Fade nav in after hero scrolls out
   useEffect(() => {
     const hero = heroRef.current
