@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import { Playfair_Display, DM_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import RootClient from '@/components/RootClient'
@@ -27,15 +26,12 @@ const jetbrains = JetBrains_Mono({
   display: 'swap',
 })
 
-export const metadata: Metadata = {
-  title: 'Siddhant Hada — Product Designer',
-  description:
-    'Senior Product Designer at o9 Solutions. Building enterprise software for Fortune 100 companies. Bangalore, India.',
-  openGraph: {
-    title: 'Siddhant Hada — Product Designer',
-    description: 'Senior Product Designer. Enterprise · Design Systems · Data Visualisation.',
-    url: 'https://siddhant.design',
-    siteName: 'siddhant.design',
+export const metadata = {
+  title: 'Siddhant Hada - Product Designer 2',
+  description: 'Product Designer with 6+ years of experience designing enterprise software. Currently at o9 Solutions, Bangalore.',
+  icons: {
+    icon: '/icon',
+    apple: '/apple-icon',
   },
 }
 
