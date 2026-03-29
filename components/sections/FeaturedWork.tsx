@@ -1,6 +1,8 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 import { m, useScroll, useMotionValue, useTransform, useReducedMotion } from 'framer-motion'
 import { projects, type Project } from '@/lib/projects'
 import ScrollReveal from '@/components/motion/ScrollReveal'
@@ -18,7 +20,7 @@ function remap(p: number, start: number, end: number): number {
 const easeInOutCubic = (v: number) =>
   v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2
 
-function ProjectCard({
+function ProjectCardInner({
   project,
   cardRef,
 }: {
@@ -40,6 +42,7 @@ function ProjectCard({
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
+        cursor: project.href ? 'pointer' : 'default',
       }}
       variants={{
         rest: { y: 0, borderColor: 'var(--border)' },
@@ -49,42 +52,76 @@ function ProjectCard({
     >
       {/* Image area */}
       <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-        <m.div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: project.gradient,
-          }}
-          variants={{
-            rest: { scale: 1 },
-            hover: { scale: 1.04 },
-          }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 20,
-            right: 20,
-            width: 48,
-            height: 48,
-            borderRadius: '50%',
-            backgroundColor: project.accentColor,
-            opacity: 0.25,
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            top: 20,
-            left: 20,
-            width: 24,
-            height: 24,
-            borderRadius: '50%',
-            backgroundColor: project.accentColor,
-            opacity: 0.15,
-          }}
-        />
+        {project.slug === 'customer-360' ? (
+          <div
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(135deg, #0A0A0A 0%, #1A0F0A 50%, #0A0A0A 100%)',
+            }}
+          >
+            <m.div
+              style={{ position: 'absolute', inset: 0 }}
+              variants={{
+                rest: { opacity: 0.75 },
+                hover: { opacity: 0.95 },
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <Image
+                src="/work/customer-360/img-360-with-all-widgets.png"
+                alt="Customer 360"
+                fill
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: 'top center',
+                  mixBlendMode: 'luminosity',
+                }}
+              />
+            </m.div>
+          </div>
+        ) : (
+          <>
+            <m.div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: project.gradient,
+              }}
+              variants={{
+                rest: { scale: 1 },
+                hover: { scale: 1.04 },
+              }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 20,
+                right: 20,
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                backgroundColor: project.accentColor,
+                opacity: 0.25,
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                top: 20,
+                left: 20,
+                width: 24,
+                height: 24,
+                borderRadius: '50%',
+                backgroundColor: project.accentColor,
+                opacity: 0.15,
+              }}
+            />
+          </>
+        )}
       </div>
 
       {/* Content area */}
@@ -178,6 +215,23 @@ function ProjectCard({
       </div>
     </m.div>
   )
+}
+
+function ProjectCard({
+  project,
+  cardRef,
+}: {
+  project: Project
+  cardRef?: React.Ref<HTMLDivElement>
+}) {
+  if (project.href) {
+    return (
+      <Link href={project.href} style={{ display: 'block', textDecoration: 'none' }}>
+        <ProjectCardInner project={project} cardRef={cardRef} />
+      </Link>
+    )
+  }
+  return <ProjectCardInner project={project} cardRef={cardRef} />
 }
 
 export default function FeaturedWork() {

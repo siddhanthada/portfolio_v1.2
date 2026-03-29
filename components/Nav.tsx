@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { usePathname } from 'next/navigation'
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import { Moon, Sun, SlidersHorizontal } from 'lucide-react'
@@ -125,6 +126,8 @@ function PillToggle({
 }
 
 export default function Nav() {
+  const pathname = usePathname()
+  const isCaseStudy = pathname.startsWith('/work/')
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false)
@@ -255,22 +258,26 @@ export default function Nav() {
             className="hidden md:flex"
             style={{ alignItems: 'center' }}
           >
-            {/* Nav links */}
-            <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
-              {navLinks.map((l) => (
-                <NavLink key={l.label} label={l.label} href={l.href} />
-              ))}
-            </div>
+            {/* Nav links — hidden on case study pages */}
+            {!isCaseStudy && (
+              <>
+                <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
+                  {navLinks.map((l) => (
+                    <NavLink key={l.label} label={l.label} href={l.href} />
+                  ))}
+                </div>
 
-            {/* Divider */}
-            <div
-              style={{
-                width: 1,
-                height: 16,
-                background: 'var(--border)',
-                margin: '0 12px',
-              }}
-            />
+                {/* Divider */}
+                <div
+                  style={{
+                    width: 1,
+                    height: 16,
+                    background: 'var(--border)',
+                    margin: '0 12px',
+                  }}
+                />
+              </>
+            )}
 
             {/* Icon buttons */}
             <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
@@ -394,43 +401,45 @@ export default function Nav() {
             </div>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className="flex md:hidden flex-col justify-center items-center"
-            style={{
-              width: 32,
-              height: 32,
-              background: 'none',
-              border: 'none',
-              padding: 0,
-              gap: 5,
-            }}
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          >
-            <m.span
-              animate={mobileOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.25 }}
+          {/* Mobile hamburger — hidden on case study pages */}
+          {!isCaseStudy && (
+            <button
+              className="flex md:hidden flex-col justify-center items-center"
               style={{
-                display: 'block',
-                width: 20,
-                height: 1,
-                backgroundColor: 'var(--text)',
-                transformOrigin: 'center',
+                width: 32,
+                height: 32,
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                gap: 5,
               }}
-            />
-            <m.span
-              animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.25 }}
-              style={{
-                display: 'block',
-                width: 20,
-                height: 1,
-                backgroundColor: 'var(--text)',
-                transformOrigin: 'center',
-              }}
-            />
-          </button>
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            >
+              <m.span
+                animate={mobileOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.25 }}
+                style={{
+                  display: 'block',
+                  width: 20,
+                  height: 1,
+                  backgroundColor: 'var(--text)',
+                  transformOrigin: 'center',
+                }}
+              />
+              <m.span
+                animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.25 }}
+                style={{
+                  display: 'block',
+                  width: 20,
+                  height: 1,
+                  backgroundColor: 'var(--text)',
+                  transformOrigin: 'center',
+                }}
+              />
+            </button>
+          )}
         </div>
       </nav>
 

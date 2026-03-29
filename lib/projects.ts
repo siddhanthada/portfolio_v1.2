@@ -6,6 +6,7 @@ export interface Project {
   tags: string[]
   gradient: string
   accentColor: string
+  href?: string
 }
 
 export const projects: Project[] = [
@@ -44,5 +45,6 @@ export const projects: Project[] = [
     tags: ['Product Design', 'B2B SaaS', '0→1'],
     gradient: 'linear-gradient(135deg, #0A0A0A 0%, #1A0F0A 50%, #0A0A0A 100%)',
     accentColor: '#F97316',
+    href: '/work/customer-360',
   },
 ]
