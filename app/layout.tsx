@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/lib/ThemeContext'
 import GlitchOverlay from '@/components/ui/GlitchOverlay'
 import BackToTop from '@/components/ui/BackToTop'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -52,6 +53,7 @@ export default function RootLayout({
           <BackToTop />
           <RootClient>{children}</RootClient>
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

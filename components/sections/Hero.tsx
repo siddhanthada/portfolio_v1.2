@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useState } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import MagneticButton from '@/components/ui/MagneticButton'
@@ -264,6 +264,14 @@ export default function Hero() {
   const hasInitialGlitched = useRef(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
   const runGlitch = useCallback(() => {
     const el = glitchLayerRef.current
     if (!el) return
@@ -431,13 +439,17 @@ export default function Hero() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          paddingTop: 140,
+          alignItems: isMobile ? 'center' : 'flex-start',
+          paddingTop: isMobile ? 100 : 140,
           paddingBottom: 140,
           minHeight: '100svh',
         }}
       >
         {/* Constrain headline to left 55% on desktop */}
-        <div className="md:w-[55%]">
+        <div
+          className="md:w-[55%]"
+          style={isMobile ? { '--text-hero': 'clamp(2.8rem, 11vw, 3.8rem)', textAlign: 'center' } as React.CSSProperties : {}}
+        >
           {/* Label */}
           <m.span
             variants={fadeIn(0.4)}
@@ -448,7 +460,7 @@ export default function Hero() {
               fontFamily: 'var(--font-mono, monospace)',
               fontSize: '12px',
               color: 'var(--accent)',
-              letterSpacing: '0.15em',
+              letterSpacing: isMobile ? '0.08em' : '0.15em',
               textTransform: 'uppercase',
               marginBottom: 20,
             }}
@@ -464,7 +476,7 @@ export default function Hero() {
               variants={prefersReducedMotion ? {} : containerVariants}
               initial="hidden"
               animate="visible"
-              style={{ lineHeight: '1.0' }}
+              style={{ lineHeight: isMobile ? '1.05' : '1.0' }}
             >
               {/* Line 1: Designing */}
               <m.div variants={lv}>
@@ -493,7 +505,7 @@ export default function Hero() {
                     fontWeight: 400,
                     color: 'var(--text)',
                     letterSpacing: '-0.01em',
-                    paddingBottom: '20px',
+                    ...(isMobile ? { paddingTop: '10px', paddingBottom: '18px' } : { paddingBottom: '20px' }),
                     paddingLeft: '4px',
                   }}
                 >
@@ -560,7 +572,7 @@ export default function Hero() {
                     fontWeight: 400,
                     color: 'var(--text)',
                     letterSpacing: '-0.01em',
-                    paddingBottom: '20px',
+                    ...(isMobile ? { paddingTop: '10px', paddingBottom: '18px' } : { paddingBottom: '20px' }),
                     paddingLeft: '4px',
                   }}
                 >
@@ -612,10 +624,10 @@ export default function Hero() {
             gap: 20,
           }}
         >
-          {/* Role tags */}
+          {/* Role tags — hidden on mobile */}
           <div
+            className="hidden md:flex"
             style={{
-              display: 'flex',
               flexWrap: 'wrap',
               fontFamily: 'var(--font-sans, sans-serif)',
               fontSize: '12px',
@@ -636,7 +648,13 @@ export default function Hero() {
           </div>
 
           {/* CTAs */}
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            gap: 12,
+            flexWrap: 'wrap',
+            width: isMobile ? '100%' : 'auto',
+          }}>
             <MagneticButton
               as="a"
               href="#work"
@@ -644,6 +662,7 @@ export default function Hero() {
                 border: '1px solid var(--border)',
                 backgroundColor: 'transparent',
                 color: 'var(--text)',
+                ...(isMobile && { width: '100%', justifyContent: 'center' }),
               }}
             >
               View Work <ArrowDown size={14} />
@@ -658,6 +677,7 @@ export default function Hero() {
                 color: 'var(--bg)',
                 fontWeight: 600,
                 border: '1px solid var(--accent)',
+                ...(isMobile && { width: '100%', justifyContent: 'center' }),
               }}
             >
               Resume <ArrowUpRight size={14} />

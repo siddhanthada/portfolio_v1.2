@@ -137,11 +137,19 @@ export default function Nav() {
   const { theme, toggleTheme } = useTheme()
   const panelRef = useRef<HTMLDivElement>(null)
   const accessBtnRef = useRef<HTMLButtonElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
   }, [])
 
   // Restore preferences on mount
@@ -166,8 +174,7 @@ export default function Nav() {
       if (
         panelRef.current &&
         !panelRef.current.contains(target) &&
-        accessBtnRef.current &&
-        !accessBtnRef.current.contains(target)
+        !(target as Element).closest?.('[data-a11y-toggle]')
       ) {
         setIsAccessibilityOpen(false)
       }
@@ -253,9 +260,9 @@ export default function Nav() {
             SH<span style={{ color: 'var(--accent)' }}>.</span>
           </Link>
 
-          {/* Desktop right side */}
+          {/* Desktop right side — also shown on mobile for case study pages */}
           <div
-            className="hidden md:flex"
+            className={isCaseStudy ? 'flex' : 'hidden md:flex'}
             style={{ alignItems: 'center' }}
           >
             {/* Nav links — hidden on case study pages */}
@@ -308,6 +315,7 @@ export default function Nav() {
               <div style={{ position: 'relative' }}>
                 <button
                   ref={accessBtnRef}
+                  data-a11y-toggle=""
                   onClick={() => setIsAccessibilityOpen((v) => !v)}
                   aria-label="Accessibility settings"
                   style={{
@@ -333,9 +341,9 @@ export default function Nav() {
                   <SlidersHorizontal size={15} />
                 </button>
 
-                {/* Accessibility dropdown panel */}
+                {/* Accessibility dropdown panel — desktop only */}
                 <AnimatePresence>
-                  {isAccessibilityOpen && (
+                  {!isMobile && isAccessibilityOpen && (
                     <m.div
                       ref={panelRef}
                       key="a11y-dropdown"
@@ -488,6 +496,99 @@ export default function Nav() {
                 </Link>
               </m.div>
             ))}
+
+            {/* Divider */}
+            <div style={{ height: 1, backgroundColor: 'var(--border)', margin: '8px 0' }} />
+
+            {/* Theme + accessibility controls */}
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <button
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+                style={{
+                  width: 28, height: 28, borderRadius: 6,
+                  background: 'transparent', border: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', color: 'var(--muted)',
+                }}
+              >
+                {theme === 'dark' ? <Moon size={15} /> : <Sun size={15} />}
+              </button>
+              <button
+                data-a11y-toggle=""
+                onClick={() => setIsAccessibilityOpen((v) => !v)}
+                aria-label="Accessibility settings"
+                style={{
+                  width: 28, height: 28, borderRadius: 6,
+                  background: isAccessibilityOpen ? 'var(--bg-card)' : 'transparent',
+                  border: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: isAccessibilityOpen ? 'var(--text)' : 'var(--muted)',
+                }}
+              >
+                <SlidersHorizontal size={15} />
+              </button>
+            </div>
+
+            {/* Mobile accessibility panel */}
+            <AnimatePresence>
+              {isMobile && isAccessibilityOpen && (
+                <m.div
+                  ref={panelRef}
+                  key="a11y-dropdown-mobile"
+                  initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+                  style={{
+                    position: 'fixed',
+                    bottom: 20,
+                    left: 20,
+                    right: 20,
+                    width: 'auto',
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 8,
+                    padding: 16,
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                    zIndex: 9999,
+                  }}
+                >
+                  <span style={labelStyle}>Motion</span>
+                  <PillToggle
+                    options={['Full', 'Reduced']}
+                    active={motionReduced ? 'Reduced' : 'Full'}
+                    onChange={handleMotionToggle}
+                  />
+                  <div style={{ marginTop: 14 }}>
+                    <span style={labelStyle}>Text Size</span>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      {fontLabels.map(([scale, label]) => {
+                        const active = fontScale === scale
+                        return (
+                          <button
+                            key={scale}
+                            onClick={() => handleFontScale(scale)}
+                            style={{
+                              flex: 1, height: 30, borderRadius: 4,
+                              fontSize: 12, fontFamily: 'var(--font-sans, sans-serif)',
+                              cursor: 'pointer', transition: 'all 0.15s ease',
+                              backgroundColor: active ? 'var(--accent)' : 'transparent',
+                              color: active ? 'var(--bg)' : 'var(--muted)',
+                              border: active ? 'none' : '1px solid var(--border)',
+                              fontWeight: active ? 600 : 400,
+                            }}
+                          >
+                            {label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </m.div>
+              )}
+            </AnimatePresence>
           </m.div>
         )}
       </AnimatePresence>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { m, LazyMotion, domAnimation } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -98,9 +98,15 @@ export default function Customer360() {
   const [showNav, setShowNav] = useState(false)
   const [activeSection, setActiveSection] = useState('context')
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
 
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+    }, 50)
+    return () => clearTimeout(timer)
   }, [])
 
   // Fade nav in after hero scrolls out
@@ -133,7 +139,10 @@ export default function Customer360() {
 
   // Show left nav only on wide viewports
   useEffect(() => {
-    const check = () => setShowNav(window.innerWidth > 1100)
+    const check = () => {
+      setShowNav(window.innerWidth > 1100)
+      setIsMobile(window.innerWidth < 768)
+    }
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
@@ -269,7 +278,14 @@ export default function Customer360() {
 
             {/* Meta strip */}
             <div
-              style={{
+              style={isMobile ? {
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '20px',
+                marginBottom: 64,
+                marginTop: 32,
+                textAlign: 'left',
+              } : {
                 display: 'flex',
                 justifyContent: 'center',
                 flexWrap: 'wrap',
@@ -284,7 +300,7 @@ export default function Customer360() {
                 { label: 'Company',  value: 'LeadSquared' },
               ].map((item, i) => (
                 <div key={item.label} style={{ display: 'flex', alignItems: 'center' }}>
-                  {i > 0 && (
+                  {!isMobile && i > 0 && (
                     <div
                       style={{
                         width: 1,
@@ -314,6 +330,7 @@ export default function Customer360() {
                         fontFamily: 'var(--font-sans, sans-serif)',
                         fontSize: '14px',
                         color: 'var(--text)',
+                        fontWeight: isMobile ? 500 : undefined,
                       }}
                     >
                       {item.value}
@@ -332,7 +349,7 @@ export default function Customer360() {
             style={{
               width: '100%',
               maxWidth: 960,
-              borderRadius: 8,
+              borderRadius: 4,
               border: '1px solid var(--border)',
               overflow: 'hidden',
             }}
@@ -692,7 +709,7 @@ export default function Customer360() {
 
             {/* illus-all */}
             <ScrollReveal delay={0.1}>
-              <div style={{ border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', marginBottom: 12 }}>
+              <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', marginBottom: 12 }}>
                 <Image
                   src="/work/customer-360/illus-all.png"
                   alt="Overview of all design explorations"
@@ -764,7 +781,7 @@ export default function Customer360() {
                   <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '11px', color: 'var(--accent)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
                     {block.label}
                   </p>
-                  <div style={{ border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', marginBottom: 12 }}>
+                  <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', marginBottom: 12 }}>
                     <Image src={block.src} alt={block.alt} width={800} height={450} style={{ width: '100%', height: 'auto', display: 'block' }} />
                   </div>
                   <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-sm)', color: 'var(--muted)', lineHeight: 1.6 }}>
@@ -812,7 +829,7 @@ export default function Customer360() {
                   { src: '/work/customer-360/img-skeletal-loaders.png', alt: 'Skeletal loaders',  caption: 'Skeletal Loaders' },
                 ].map((img) => (
                   <div key={img.caption} style={{ flex: '1 1 48%', minWidth: 0 }}>
-                    <div style={{ border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', marginBottom: 8 }}>
+                    <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', marginBottom: 8 }}>
                       <Image src={img.src} alt={img.alt} width={400} height={250} style={{ width: '100%', height: 'auto', display: 'block' }} />
                     </div>
                     <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '11px', color: 'var(--muted)', textAlign: 'center' }}>{img.caption}</p>
