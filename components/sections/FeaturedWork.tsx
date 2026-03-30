@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { m, useScroll, useMotionValue, useTransform, useReducedMotion } from 'framer-motion'
@@ -27,6 +27,7 @@ function ProjectCardInner({
   project: Project
   cardRef?: React.Ref<HTMLDivElement>
 }) {
+  const [hovered, setHovered] = useState(false)
   return (
     <m.div
       ref={cardRef}
@@ -34,6 +35,8 @@ function ProjectCardInner({
       whileHover="hover"
       initial="rest"
       animate="rest"
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
       style={{
         backgroundColor: 'var(--bg-card)',
         border: '1px solid var(--border)',
@@ -62,13 +65,16 @@ function ProjectCardInner({
               background: 'linear-gradient(135deg, #0A0A0A 0%, #1A0F0A 50%, #0A0A0A 100%)',
             }}
           >
-            <m.div
-              style={{ position: 'absolute', inset: 0 }}
-              variants={{
-                rest: { opacity: 0.75 },
-                hover: { opacity: 0.95 },
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+                opacity: hovered ? 0.95 : 0.75,
+                transition: 'opacity 0.3s ease',
               }}
-              transition={{ duration: 0.3 }}
             >
               <Image
                 src="/work/customer-360/img-360-with-all-widgets.png"
@@ -80,7 +86,7 @@ function ProjectCardInner({
                   mixBlendMode: 'luminosity',
                 }}
               />
-            </m.div>
+            </div>
           </div>
         ) : (
           <>

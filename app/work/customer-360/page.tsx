@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { m, LazyMotion, domAnimation } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -99,7 +99,7 @@ export default function Customer360() {
   const [activeSection, setActiveSection] = useState('context')
   const [scrollProgress, setScrollProgress] = useState(0)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
