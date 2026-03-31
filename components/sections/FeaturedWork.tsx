@@ -55,14 +55,14 @@ function ProjectCardInner({
     >
       {/* Image area */}
       <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-        {project.slug === 'customer-360' ? (
+        {(project.slug === 'customer-360' || project.slug === 'locus-last-mile') ? (
           <div
             style={{
               position: 'relative',
               overflow: 'hidden',
               width: '100%',
               height: '100%',
-              background: 'linear-gradient(135deg, #0A0A0A 0%, #1A0F0A 50%, #0A0A0A 100%)',
+              background: project.gradient,
             }}
           >
             <div
@@ -72,13 +72,15 @@ function ProjectCardInner({
                 right: 0,
                 bottom: 0,
                 left: 0,
-                opacity: hovered ? 0.95 : 0.75,
+                opacity: hovered ? (project.slug === 'locus-last-mile' ? 0.85 : 0.95) : (project.slug === 'locus-last-mile' ? 0.65 : 0.75),
                 transition: 'opacity 0.3s ease',
               }}
             >
               <Image
-                src="/work/customer-360/img-360-with-all-widgets.png"
-                alt="Customer 360"
+                src={project.slug === 'locus-last-mile'
+                  ? '/work/locus-last-mile/assignment-dashboard.png'
+                  : '/work/customer-360/img-360-with-all-widgets.png'}
+                alt={project.name}
                 fill
                 style={{
                   objectFit: 'cover',
