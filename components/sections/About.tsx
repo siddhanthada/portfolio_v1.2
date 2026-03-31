@@ -2,6 +2,7 @@
 
 import ScrollReveal from '@/components/motion/ScrollReveal'
 import { m } from 'framer-motion'
+import Image from 'next/image'
 
 const stats = [
   { value: '6+', label: 'Years in Enterprise' },
@@ -29,26 +30,21 @@ export default function About() {
             <div>
               <div
                 style={{
+                  position: 'relative',
                   width: '100%',
                   aspectRatio: '1/1',
-                  backgroundColor: 'var(--bg-card)',
-                  border: '1px solid var(--border)',
                   borderRadius: 4,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  border: '1px solid var(--border)',
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: 'var(--font-mono, monospace)',
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--muted)',
-                    letterSpacing: '0.08em',
-                  }}
-                >
-                  Siddhant Hada
-                </span>
+                <Image
+                  src="/work/about/my-picture.png"
+                  alt="Siddhant Hada"
+                  fill
+                  style={{ objectFit: 'cover', objectPosition: 'top center' }}
+                  priority
+                />
               </div>
               <p
                 style={{

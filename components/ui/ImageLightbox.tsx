@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { Expand, X } from 'lucide-react'
 
@@ -61,7 +61,7 @@ export default function ImageLightbox({
         {/* Expand button — top right, shows on hover */}
         <AnimatePresence>
           {hovered && (
-            <motion.button
+            <m.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
@@ -86,7 +86,7 @@ export default function ImageLightbox({
               aria-label="Expand image"
             >
               <Expand size={14} />
-            </motion.button>
+            </m.button>
           )}
         </AnimatePresence>
 
@@ -108,7 +108,7 @@ export default function ImageLightbox({
       {/* Lightbox overlay */}
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -151,7 +151,7 @@ export default function ImageLightbox({
             </button>
 
             {/* Image container — stop propagation so clicking image doesnt close */}
-            <motion.div
+            <m.div
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.92, opacity: 0 }}
@@ -178,7 +178,7 @@ export default function ImageLightbox({
                   display: 'block',
                 }}
               />
-            </motion.div>
+            </m.div>
 
             {/* Caption in lightbox */}
             {caption && (
@@ -196,7 +196,7 @@ export default function ImageLightbox({
                 {caption}
               </p>
             )}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

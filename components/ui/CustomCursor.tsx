@@ -93,7 +93,7 @@ export default function CustomCursor() {
           translateX: '-50%',
           translateY: '-50%',
           pointerEvents: 'none',
-          zIndex: 9999,
+          zIndex: 999999,
         }}
         animate={{ opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.15 }}
@@ -119,7 +119,7 @@ export default function CustomCursor() {
           translateX: '-50%',
           translateY: '-50%',
           pointerEvents: 'none',
-          zIndex: 9998,
+          zIndex: 999998,
         }}
         animate={{ opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.15 }}
