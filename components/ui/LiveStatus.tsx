@@ -70,6 +70,7 @@ export default function LiveStatus() {
   if (isMobile) {
     return (
       <div
+        suppressHydrationWarning
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -91,7 +92,7 @@ export default function LiveStatus() {
         {/* Row 2: centered clock */}
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: '4px' }}>
           <span style={{ color: 'var(--muted)' }}>IST&nbsp;</span>
-          <span style={{ color: 'var(--text)', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.05em' }}>{time}</span>
+          <span suppressHydrationWarning style={{ color: 'var(--text)', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.05em' }}>{time}</span>
         </div>
       </div>
     )
@@ -99,6 +100,7 @@ export default function LiveStatus() {
 
   return (
     <div
+      suppressHydrationWarning
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -124,7 +126,7 @@ export default function LiveStatus() {
 
       {/* Right side — live clock */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <span className="hidden sm:block">{date}</span>
+        <span suppressHydrationWarning className="hidden sm:block">{date}</span>
         <span style={{ color: 'var(--border)' }} className="hidden sm:block">·</span>
         <span
           style={{
@@ -133,7 +135,7 @@ export default function LiveStatus() {
             letterSpacing: '0.05em',
           }}
         >
-          IST {time}
+          IST <span suppressHydrationWarning>{time}</span>
         </span>
       </div>
     </div>

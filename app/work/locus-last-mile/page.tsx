@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import ScrollReveal from '@/components/motion/ScrollReveal'
+import ImageLightbox from '@/components/ui/ImageLightbox'
 
 /* ── Nav sections ────────────────────────────────────────────────────────── */
 
@@ -125,38 +126,14 @@ function CaseImage({
 }) {
   return (
     <div style={{ marginTop }}>
-      <div
-        style={{
-          position: 'relative',
-          width: '100%',
-          borderRadius: 4,
-          overflow: 'hidden',
-          border: '1px solid var(--border)',
-          backgroundColor: bg,
-        }}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          width={760}
-          height={480}
-          style={{ width: '100%', height: 'auto', display: 'block' }}
-          loading="lazy"
-        />
-      </div>
-      {caption && (
-        <p
-          style={{
-            fontFamily: 'var(--font-mono, monospace)',
-            fontSize: '11px',
-            color: 'var(--muted)',
-            textAlign: 'center',
-            marginTop: 12,
-          }}
-        >
-          {caption}
-        </p>
-      )}
+      <ImageLightbox
+        src={src}
+        alt={alt}
+        width={760}
+        height={480}
+        caption={caption}
+        style={bg ? { backgroundColor: bg } : undefined}
+      />
     </div>
   )
 }
@@ -1274,6 +1251,7 @@ export default function LocusLastMile() {
               alt="Workflow diagram"
               caption="Manjunath's day mapped across three modes"
               bg="#ffffff"
+              marginTop={40}
             />
           </ScrollReveal>
 
@@ -1312,19 +1290,13 @@ export default function LocusLastMile() {
                 }}
               >
                 {['/work/locus-last-mile/lofi-v1.png', '/work/locus-last-mile/lofi-v1.1.png'].map((src, i) => (
-                  <div
+                  <ImageLightbox
                     key={i}
-                    style={{ borderRadius: 4, overflow: 'hidden', border: '1px solid var(--border)' }}
-                  >
-                    <Image
-                      src={src}
-                      alt={`Lo-fi exploration ${i + 1}`}
-                      width={380}
-                      height={240}
-                      style={{ width: '100%', height: 'auto', display: 'block' }}
-                      loading="lazy"
-                    />
-                  </div>
+                    src={src}
+                    alt={`Lo-fi exploration ${i + 1}`}
+                    width={380}
+                    height={240}
+                  />
                 ))}
               </div>
               <p
@@ -1539,18 +1511,12 @@ export default function LocusLastMile() {
                   >
                     {block.desc}
                   </p>
-                  <div
-                    style={{ borderRadius: 4, overflow: 'hidden', border: '1px solid var(--border)' }}
-                  >
-                    <Image
-                      src={block.img}
-                      alt={block.title}
-                      width={760}
-                      height={480}
-                      style={{ width: '100%', height: 'auto', display: 'block' }}
-                      loading="lazy"
-                    />
-                  </div>
+                  <ImageLightbox
+                    src={block.img}
+                    alt={block.title}
+                    width={760}
+                    height={480}
+                  />
                 </div>
               </ScrollReveal>
               {i < arr.length - 1 && <Connector />}
@@ -1664,6 +1630,7 @@ export default function LocusLastMile() {
                       flexShrink: 0,
                       textAlign: 'right',
                       paddingTop: 14,
+                      paddingRight: 16,
                       position: 'relative',
                     }}
                   >
@@ -1675,6 +1642,7 @@ export default function LocusLastMile() {
                         fontWeight: 600,
                         display: 'block',
                         lineHeight: 1.3,
+                        whiteSpace: 'nowrap',
                       }}
                     >
                       {item.time}
@@ -1717,18 +1685,12 @@ export default function LocusLastMile() {
                         {item.narrative}
                       </p>
                     </div>
-                    <div
-                      style={{ borderRadius: 4, overflow: 'hidden', border: '1px solid var(--border)' }}
-                    >
-                      <Image
-                        src={item.img}
-                        alt={`Timeline step ${i + 1}`}
-                        width={700}
-                        height={440}
-                        style={{ width: '100%', height: 'auto', display: 'block' }}
-                        loading="lazy"
-                      />
-                    </div>
+                    <ImageLightbox
+                      src={item.img}
+                      alt={`Timeline step ${i + 1}`}
+                      width={700}
+                      height={440}
+                    />
                   </div>
                 </div>
               </ScrollReveal>

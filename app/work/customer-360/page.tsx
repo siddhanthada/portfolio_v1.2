@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import ScrollReveal from '@/components/motion/ScrollReveal'
+import ImageLightbox from '@/components/ui/ImageLightbox'
 
 /* ── Nav sections ────────────────────────────────────────────────────────── */
 
@@ -709,13 +710,12 @@ export default function Customer360() {
 
             {/* illus-all */}
             <ScrollReveal delay={0.1}>
-              <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', marginBottom: 12 }}>
-                <Image
+              <div style={{ marginBottom: 12 }}>
+                <ImageLightbox
                   src="/work/customer-360/illus-all.png"
                   alt="Overview of all design explorations"
                   width={800}
                   height={450}
-                  style={{ width: '100%', height: 'auto', display: 'block' }}
                 />
               </div>
               <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '11px', color: 'var(--muted)', textAlign: 'center', marginBottom: 48 }}>
@@ -781,8 +781,8 @@ export default function Customer360() {
                   <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '11px', color: 'var(--accent)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
                     {block.label}
                   </p>
-                  <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', marginBottom: 12 }}>
-                    <Image src={block.src} alt={block.alt} width={800} height={450} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                  <div style={{ marginBottom: 12 }}>
+                    <ImageLightbox src={block.src} alt={block.alt} width={800} height={450} />
                   </div>
                   <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-sm)', color: 'var(--muted)', lineHeight: 1.6 }}>
                     {block.desc}
@@ -829,8 +829,8 @@ export default function Customer360() {
                   { src: '/work/customer-360/img-skeletal-loaders.png', alt: 'Skeletal loaders',  caption: 'Skeletal Loaders' },
                 ].map((img) => (
                   <div key={img.caption} style={{ flex: '1 1 48%', minWidth: 0 }}>
-                    <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden', marginBottom: 8 }}>
-                      <Image src={img.src} alt={img.alt} width={400} height={250} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    <div style={{ marginBottom: 8 }}>
+                      <ImageLightbox src={img.src} alt={img.alt} width={400} height={250} />
                     </div>
                     <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '11px', color: 'var(--muted)', textAlign: 'center' }}>{img.caption}</p>
                   </div>

@@ -24,7 +24,7 @@ export const projects: Project[] = [
     number: '02',
     name: 'Locus Last Mile',
     oneLiner: 'A warehouse management dashboard for 661 orders, 22 riders, and one very important delivery.',
-    tags: ['Product Design', 'B2B SaaS', 'Take-home'],
+    tags: ['Product Design', 'B2B SaaS'],
     gradient: 'linear-gradient(135deg, #08080F 0%, #0D0A1F 50%, #08080F 100%)',
     accentColor: '#6366F1',
     href: '/work/locus-last-mile',
