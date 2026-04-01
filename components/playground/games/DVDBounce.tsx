@@ -2,7 +2,12 @@
 
 import { useEffect, useRef } from 'react'
 
-const COLORS = ['#C8FF00', '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFEAA7', '#A8E6CF', '#DDA0DD']
+const COLORS_DARK  = ['#C8FF00', '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFEAA7', '#A8E6CF', '#DDA0DD']
+const COLORS_LIGHT = ['#4A6600', '#CC2222', '#006060', '#1A4488', '#886600', '#2A6644', '#662288']
+const isLight = () => document.documentElement.getAttribute('data-theme') === 'light'
+function getPalette() {
+  return isLight() ? COLORS_LIGHT : COLORS_DARK
+}
 
 export default function DVDBounce() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -26,7 +31,7 @@ export default function DVDBounce() {
     let y = Math.random() * (H - th) + th
     let dx = 2.5
     let dy = 2.5
-    let color = COLORS[Math.floor(Math.random() * COLORS.length)]
+    let color = getPalette()[Math.floor(Math.random() * getPalette().length)]
     let flashFrames = 0
     let flashColor = color
     let corners = 0
@@ -34,8 +39,9 @@ export default function DVDBounce() {
     let rafId: number
 
     function pickColor() {
+      const palette = getPalette()
       let c: string
-      do { c = COLORS[Math.floor(Math.random() * COLORS.length)] } while (c === color)
+      do { c = palette[Math.floor(Math.random() * palette.length)] } while (c === color)
       return c
     }
 
@@ -62,8 +68,7 @@ export default function DVDBounce() {
       }
 
       // bg
-      const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#080808'
-      ctx.fillStyle = bg
+      ctx.fillStyle = isLight() ? '#f4f1ec' : '#080808'
       ctx.fillRect(0, 0, W, H)
 
       // flash

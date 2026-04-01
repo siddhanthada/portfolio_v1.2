@@ -9,10 +9,11 @@ import ScrollReveal from '@/components/motion/ScrollReveal'
 import GameModal from '@/components/playground/GameModal'
 
 const DinoGame = dynamic(() => import('@/components/playground/games/DinoGame'), { ssr: false })
-const SlidingPuzzle = dynamic(() => import('@/components/playground/games/SlidingPuzzle'), { ssr: false })
+const PicturePuzzle = dynamic(() => import('@/components/playground/games/PicturePuzzle'), { ssr: false })
 const FlowerBouquet = dynamic(() => import('@/components/playground/games/FlowerBouquet'), { ssr: false })
 const DVDBounce = dynamic(() => import('@/components/playground/games/DVDBounce'), { ssr: false })
 const ReactionTest = dynamic(() => import('@/components/playground/games/ReactionTest'), { ssr: false })
+const SnakeGame = dynamic(() => import('@/components/playground/games/SnakeGame'), { ssr: false })
 
 const BikeMap = dynamic(
   () => import('@/components/playground/BikeMap'),
@@ -104,9 +105,9 @@ export default function PlaygroundPage() {
       component: <DinoGame />,
     },
     {
-      name: 'Sliding Puzzle',
-      desc: 'Slide the tiles into the correct order in as few moves as possible.',
-      component: <SlidingPuzzle />,
+      name: 'Picture Puzzle',
+      desc: 'Arrange the pieces of Van Gogh\'s Starry Night. Drag and drop to swap.',
+      component: <PicturePuzzle />,
     },
     {
       name: 'Flower Bouquet',
@@ -122,6 +123,11 @@ export default function PlaygroundPage() {
       name: 'Reaction Test',
       desc: 'Click the moment it turns green. Find out how fast you actually are.',
       component: <ReactionTest />,
+    },
+    {
+      name: 'Snake',
+      desc: 'Eat the dot. Grow longer. Don\'t hit the walls or yourself.',
+      component: <SnakeGame />,
     },
   ]
 

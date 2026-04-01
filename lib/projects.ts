@@ -18,6 +18,7 @@ export const projects: Project[] = [
     tags: ['Design Systems', 'Data Viz', 'Enterprise'],
     gradient: 'linear-gradient(135deg, #0A0A1A 0%, #0D1F3C 50%, #0A0A1A 100%)',
     accentColor: '#4A90E2',
+    href: '/work/charts-modernisation',
   },
   {
     slug: 'locus-last-mile',

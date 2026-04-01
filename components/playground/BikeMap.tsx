@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import { useRef, useEffect } from 'react'
 import type { Map as LeafletMap } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { useTheme } from '@/lib/ThemeContext'
 
 // Fix Leaflet default icon bug with Next.js
 delete (L.Icon.Default.prototype as any)._getIconUrl
@@ -16,7 +17,7 @@ L.Icon.Default.mergeOptions({
 
 const accentIcon = new L.DivIcon({
   className: '',
-  html: `<div style="width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid #080808;box-shadow:0 0 0 3px rgba(200,255,0,0.25)"></div>`,
+  html: `<div style="width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 3px rgba(200,255,0,0.25)"></div>`,
   iconSize: [10, 10],
   iconAnchor: [5, 5],
   popupAnchor: [0, -12],
@@ -97,6 +98,11 @@ function OpenDefaultPopup({ markerRef }: { markerRef: React.RefObject<L.Marker |
 export default function BikeMap() {
   const mapRef = useRef<LeafletMap | null>(null)
   const sakleshpurRef = useRef<L.Marker | null>(null)
+  const { theme } = useTheme()
+
+  const tileUrl = theme === 'light'
+    ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+    : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
 
   return (
     <div>
@@ -113,7 +119,8 @@ export default function BikeMap() {
         }}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          key={tileUrl}
+          url={tileUrl}
           attribution="CartoDB"
         />
         <OpenDefaultPopup markerRef={sakleshpurRef} />

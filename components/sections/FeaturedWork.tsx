@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { m, useScroll, useMotionValue, useTransform, useReducedMotion } from 'framer-motion'
+import { Lock } from 'lucide-react'
 import { projects, type Project } from '@/lib/projects'
 import ScrollReveal from '@/components/motion/ScrollReveal'
 
@@ -55,7 +56,7 @@ function ProjectCardInner({
     >
       {/* Image area */}
       <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-        {(project.slug === 'customer-360' || project.slug === 'locus-last-mile') ? (
+        {(project.slug === 'customer-360' || project.slug === 'locus-last-mile' || project.slug === 'charts-modernisation') ? (
           <div
             style={{
               position: 'relative',
@@ -72,14 +73,18 @@ function ProjectCardInner({
                 right: 0,
                 bottom: 0,
                 left: 0,
-                opacity: hovered ? (project.slug === 'locus-last-mile' ? 0.85 : 0.95) : (project.slug === 'locus-last-mile' ? 0.65 : 0.75),
+                opacity: hovered ? 0.9 : 0.7,
                 transition: 'opacity 0.3s ease',
               }}
             >
               <Image
-                src={project.slug === 'locus-last-mile'
-                  ? '/work/locus-last-mile/assignment-dashboard.png'
-                  : '/work/customer-360/img-360-with-all-widgets.png'}
+                src={
+                  project.slug === 'locus-last-mile'
+                    ? '/work/locus-last-mile/assignment-dashboard.png'
+                    : project.slug === 'charts-modernisation'
+                    ? '/work/charts-modernisation/charts-hero.png'
+                    : '/work/customer-360/img-360-with-all-widgets.png'
+                }
                 alt={project.name}
                 fill
                 style={{
@@ -215,9 +220,15 @@ function ProjectCardInner({
               color: 'var(--text)',
               fontFamily: 'var(--font-sans, sans-serif)',
               letterSpacing: '0.02em',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
             }}
           >
             View Case Study →
+            {project.slug === 'charts-modernisation' && (
+              <Lock size={10} style={{ color: 'var(--muted)', flexShrink: 0 }} />
+            )}
           </span>
         </m.div>
       </div>

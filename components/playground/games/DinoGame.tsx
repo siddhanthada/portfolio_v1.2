@@ -29,8 +29,14 @@ export default function DinoGame() {
       started: false,
     }
 
-    const getColor = (varName: string) => {
-      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#fff'
+    const isLight = () => document.documentElement.getAttribute('data-theme') === 'light'
+
+    const C = {
+      get bg()     { return isLight() ? '#f4f1ec' : '#080808' },
+      get ground() { return isLight() ? '#BFB3A4' : '#2A2A2A' },
+      get text()   { return isLight() ? '#2A1F14' : '#F0EDE8' },
+      get muted()  { return isLight() ? '#7A6A5A' : '#717171' },
+      get accent() { return isLight() ? '#4A6600' : '#C8FF00' },
     }
 
     function jump() {
@@ -71,11 +77,11 @@ export default function DinoGame() {
       ctx.clearRect(0, 0, W, H)
 
       // bg
-      ctx.fillStyle = getColor('--bg') || '#080808'
+      ctx.fillStyle = C.bg
       ctx.fillRect(0, 0, W, H)
 
       // ground
-      ctx.strokeStyle = getColor('--border') || '#1E1E1E'
+      ctx.strokeStyle = C.ground
       ctx.lineWidth = 1
       ctx.beginPath()
       ctx.moveTo(0, GROUND)
@@ -83,7 +89,7 @@ export default function DinoGame() {
       ctx.stroke()
 
       if (!state.started) {
-        ctx.fillStyle = getColor('--muted') || '#717171'
+        ctx.fillStyle = C.muted
         ctx.font = '12px monospace'
         ctx.textAlign = 'center'
         ctx.fillText('Press Space or click to start', W / 2, GROUND / 2)
@@ -91,12 +97,12 @@ export default function DinoGame() {
       }
 
       if (state.dead) {
-        ctx.fillStyle = getColor('--text') || '#F0EDE8'
+        ctx.fillStyle = C.text
         ctx.font = 'italic 28px serif'
         ctx.textAlign = 'center'
         ctx.fillText('Game Over', W / 2, H / 2 - 20)
         ctx.font = '14px monospace'
-        ctx.fillStyle = getColor('--muted') || '#717171'
+        ctx.fillStyle = C.muted
         ctx.fillText(`Score: ${Math.floor(state.score)}`, W / 2, H / 2 + 10)
         ctx.font = '12px monospace'
         ctx.fillText('Press Space to restart', W / 2, H / 2 + 35)
@@ -133,15 +139,16 @@ export default function DinoGame() {
         for (let i = state.cacti.length - 1; i >= 0; i--) {
           state.cacti[i].x -= state.speed
           if (state.cacti[i].x + state.cacti[i].w < 0) { state.cacti.splice(i, 1); continue }
-          ctx.fillStyle = getColor('--text') || '#F0EDE8'
+          ctx.fillStyle = C.text
           const c = state.cacti[i]
           ctx.fillRect(c.x, GROUND - c.h, c.w, c.h)
 
-          // collision
+          // collision — check dino bottom vs cactus top (shrunk hitboxes)
           if (
-            80 < c.x + c.w - 4 &&
-            80 + 30 > c.x + 4 &&
-            state.dinoY < GROUND - c.h + 4
+            80 + 4 < c.x + c.w - 4 &&
+            80 + 26 > c.x + 4 &&
+            state.dinoY + 36 > GROUND - c.h + 4 &&
+            state.dinoY < GROUND
           ) {
             state.dead = true
           }
@@ -149,11 +156,11 @@ export default function DinoGame() {
       }
 
       // dino
-      ctx.fillStyle = '#ffffff'
+      ctx.fillStyle = C.text
       ctx.fillRect(80, state.dinoY, 30, 40)
 
       // score
-      ctx.fillStyle = getColor('--accent') || '#C8FF00'
+      ctx.fillStyle = C.accent
       ctx.font = '12px monospace'
       ctx.textAlign = 'right'
       ctx.fillText(`${Math.floor(state.score)}`, W - 16, 24)

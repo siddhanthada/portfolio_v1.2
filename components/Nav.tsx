@@ -127,7 +127,7 @@ function PillToggle({
 
 export default function Nav() {
   const pathname = usePathname()
-  const isCaseStudy = pathname.startsWith('/work/')
+  const isCaseStudy = pathname.startsWith('/work/') || pathname === '/playground'
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false)

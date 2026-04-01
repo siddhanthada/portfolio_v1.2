@@ -443,7 +443,6 @@ export default function LocusLastMile() {
               { label: 'Role', value: 'Product Designer' },
               { label: 'Type', value: 'Personal Project' },
               { label: 'Tools', value: 'Figma, AI-assisted' },
-              { label: 'Year', value: '2026' },
             ].map((item, i, arr) => (
               <div
                 key={item.label}

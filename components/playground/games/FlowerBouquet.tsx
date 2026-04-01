@@ -68,7 +68,8 @@ export default function FlowerBouquet() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#080808'
+    // bg
+    ctx.fillStyle = document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f1ec' : '#080808'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     for (const f of flowers.current) drawFlower(ctx, f.x, f.y, f.type, f.scale, f.rot)
   }
