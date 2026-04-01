@@ -1,8 +1,8 @@
 'use client'
 
 import L from 'leaflet'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import { useRef } from 'react'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { useRef, useEffect } from 'react'
 import type { Map as LeafletMap } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
@@ -81,8 +81,22 @@ const rides = [
   },
 ]
 
+function OpenDefaultPopup({ markerRef }: { markerRef: React.RefObject<L.Marker | null> }) {
+  const map = useMap()
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (markerRef.current) {
+        markerRef.current.openPopup()
+      }
+    }, 600)
+    return () => clearTimeout(timer)
+  }, [map, markerRef])
+  return null
+}
+
 export default function BikeMap() {
   const mapRef = useRef<LeafletMap | null>(null)
+  const sakleshpurRef = useRef<L.Marker | null>(null)
 
   return (
     <div>
@@ -102,9 +116,15 @@ export default function BikeMap() {
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           attribution="CartoDB"
         />
+        <OpenDefaultPopup markerRef={sakleshpurRef} />
 
         {rides.map((ride) => (
-          <Marker key={ride.name} position={[ride.lat, ride.lng]} icon={accentIcon}>
+          <Marker
+            key={ride.name}
+            position={[ride.lat, ride.lng]}
+            icon={accentIcon}
+            ref={ride.name === 'Sakleshpur' ? sakleshpurRef : undefined}
+          >
             <Popup>
               <div>
                 <div

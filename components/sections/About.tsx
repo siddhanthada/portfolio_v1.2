@@ -39,7 +39,7 @@ export default function About() {
                 }}
               >
                 <Image
-                  src="/work/about/my-picture.png"
+                  src="/work/about/my-picture.PNG"
                   alt="Siddhant Hada"
                   fill
                   style={{ objectFit: 'cover', objectPosition: 'top center' }}

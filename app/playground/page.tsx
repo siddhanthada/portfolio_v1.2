@@ -52,7 +52,7 @@ const sketches = [
   },
   {
     src: '/work/playground/sketches/eiffel-tower.png',
-    name: 'Eiffel Tower',
+    name: '3D Bridge',
     meta: 'Charcoal · 2020',
   },
   {
