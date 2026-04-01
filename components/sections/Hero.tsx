@@ -669,7 +669,7 @@ export default function Hero() {
             </MagneticButton>
             <MagneticButton
               as="a"
-              href="/resume.pdf"
+              href="/work/resume/Siddhant_Hada_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               style={{
