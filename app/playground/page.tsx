@@ -69,20 +69,24 @@ const plugins = [
     description:
       'Paste any JSON object and instantly generate a clean, structured table frame in Figma. Built for designers who work with APIs and need to visualise data without leaving the tool.',
     link: 'https://www.figma.com/community/plugin/1234',
+    note: null,
     active: true,
     opacity: 1,
   },
   {
-    name: 'Plugin 02',
-    description: 'In progress. Something useful for design system workflows.',
+    name: 'Skeletal Loader - Charts',
+    description:
+      'Generate accurate skeletal loaders for different chart types: configure chart structure, theme, and animation, and drop a ready-to-use component straight onto your canvas.',
     link: null,
-    active: false,
-    opacity: 0.55,
+    note: 'Published for o9',
+    active: true,
+    opacity: 1,
   },
   {
     name: 'Plugin 03',
     description: 'In progress. More details soon.',
     link: null,
+    note: null,
     active: false,
     opacity: 0.55,
   },
@@ -804,6 +808,16 @@ export default function PlaygroundPage() {
                       >
                         View on Figma Community ↗
                       </a>
+                    ) : plugin.active && plugin.note ? (
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-mono, monospace)',
+                          fontSize: 11,
+                          color: 'var(--muted)',
+                        }}
+                      >
+                        {plugin.note}
+                      </span>
                     ) : (
                       <span
                         style={{
