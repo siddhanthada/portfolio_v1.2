@@ -56,7 +56,34 @@ function ProjectCardInner({
     >
       {/* Image area */}
       <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-        {(project.slug === 'customer-360' || project.slug === 'locus-last-mile' || project.slug === 'charts-modernisation') ? (
+        {project.slug === 'smart-cards' ? (
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              background: project.gradient,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity: hovered ? 0.9 : 0.7,
+              transition: 'opacity 0.3s ease',
+            }}
+          >
+            <Image
+              src="/work/smart-cards/main-frame-image.png"
+              alt={project.name}
+              width={400}
+              height={600}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                objectPosition: 'center',
+                display: 'block',
+              }}
+            />
+          </div>
+        ) : (project.slug === 'customer-360' || project.slug === 'locus-last-mile' || project.slug === 'charts-modernisation') ? (
           <div
             style={{
               position: 'relative',
