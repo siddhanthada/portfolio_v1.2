@@ -892,7 +892,7 @@ export default function Customer360() {
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
               onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
             >
-              Next Case Study → Charts Modernisation
+              Next Case Study → Modernising Data Visualisation
             </Link>
           </div>
         </div>

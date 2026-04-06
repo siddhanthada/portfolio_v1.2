@@ -13,8 +13,8 @@ export const projects: Project[] = [
   {
     slug: 'charts-modernisation',
     number: '01',
-    name: 'Charts Modernisation',
-    oneLiner: 'Migrating jqPlot to Highcharts for Fortune 100 planning workflows.',
+    name: 'Modernising Data Visualisation',
+    oneLiner: 'Rebuilding the visual language of enterprise planning, one chart type at a time.',
     tags: ['Design Systems', 'Data Viz', 'Enterprise'],
     gradient: 'linear-gradient(135deg, #0A0A1A 0%, #0D1F3C 50%, #0A0A1A 100%)',
     accentColor: '#4A90E2',

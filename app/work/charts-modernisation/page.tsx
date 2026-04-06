@@ -376,7 +376,7 @@ export default function ChartsModernisation() {
               margin: '0 0 8px',
             }}
           >
-            Charts Modernisation
+            Modernising Data Visualisation
           </h1>
 
           <p
@@ -655,7 +655,7 @@ export default function ChartsModernisation() {
                 margin: '0 0 16px',
               }}
             >
-              Charts Modernisation
+              Modernising Data Visualisation
             </h1>
           </m.div>
 
@@ -746,7 +746,7 @@ export default function ChartsModernisation() {
           >
             <CaseImage
               src="/work/charts-modernisation/charts-hero.png"
-              alt="Charts Modernisation Hero"
+              alt="Modernising Data Visualisation Hero"
             />
           </m.div>
         </div>

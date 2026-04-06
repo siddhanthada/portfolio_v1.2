@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "portfolio",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": ["PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin", "HOME=/Users/siddhanthada", "npm", "run", "dev"],
       "port": 3000
     }
   ]
