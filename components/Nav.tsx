@@ -233,21 +233,156 @@ export default function Nav() {
           left: 0,
           right: 0,
           zIndex: 100,
-          backdropFilter: scrolled ? 'blur(12px)' : 'blur(0px)',
-          WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'blur(0px)',
-          transition: 'backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease',
+          backgroundColor: scrolled
+            ? (theme === 'dark' ? 'rgba(8,8,8,0.5)' : 'rgba(240,237,232,0.72)')
+            : 'transparent',
+          backdropFilter: scrolled ? 'blur(20px)' : 'blur(0px)',
+          WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'blur(0px)',
+          transition: 'background-color 0.4s ease, backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease',
         }}
       >
+        {/* ── Desktop nav — 3-col grid: logo | links | controls ── */}
         <div
-          className="container"
+          className="container hidden md:grid"
           style={{
             height: 64,
-            display: 'flex',
+            gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
-            justifyContent: 'space-between',
           }}
         >
-          {/* Logo */}
+          {/* Col 1: Logo */}
+          <Link
+            href="/"
+            style={{
+              fontFamily: 'var(--font-mono, monospace)',
+              fontSize: '13px',
+              color: 'var(--text)',
+              textDecoration: 'none',
+              letterSpacing: '0.08em',
+              justifySelf: 'start',
+            }}
+          >
+            SH<span style={{ color: 'var(--accent)' }}>.</span>
+          </Link>
+
+          {/* Col 2: Centered nav links (hidden on case study) */}
+          {!isCaseStudy ? (
+            <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
+              {navLinks.map((l) => (
+                <NavLink key={l.label} label={l.label} href={l.href} />
+              ))}
+            </div>
+          ) : (
+            <div />
+          )}
+
+          {/* Col 3: Controls — right-aligned */}
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center', justifySelf: 'end' }}>
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              style={{
+                width: 28, height: 28, borderRadius: 6,
+                background: 'transparent', border: 'none',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', color: 'var(--muted)', transition: 'color 0.2s ease',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+            >
+              {theme === 'dark' ? <Moon size={15} /> : <Sun size={15} />}
+            </button>
+
+            <div style={{ position: 'relative' }}>
+              <button
+                ref={accessBtnRef}
+                data-a11y-toggle=""
+                onClick={() => setIsAccessibilityOpen((v) => !v)}
+                aria-label="Accessibility settings"
+                style={{
+                  width: 28, height: 28, borderRadius: 6,
+                  background: isAccessibilityOpen ? 'var(--bg-card)' : 'transparent',
+                  border: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: isAccessibilityOpen ? 'var(--text)' : 'var(--muted)',
+                  transition: 'color 0.2s ease, background-color 0.2s ease',
+                }}
+                onMouseEnter={(e) => {
+                  if (!isAccessibilityOpen) e.currentTarget.style.color = 'var(--text)'
+                }}
+                onMouseLeave={(e) => {
+                  if (!isAccessibilityOpen) e.currentTarget.style.color = 'var(--muted)'
+                }}
+              >
+                <SlidersHorizontal size={15} />
+              </button>
+
+              <AnimatePresence>
+                {isAccessibilityOpen && (
+                  <m.div
+                    ref={panelRef}
+                    key="a11y-dropdown"
+                    initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+                    style={{
+                      position: 'absolute',
+                      top: 'calc(100% + 8px)',
+                      right: 0,
+                      width: 210,
+                      background: 'var(--bg-card)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 8,
+                      padding: 16,
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                      zIndex: 9999,
+                    }}
+                  >
+                    <span style={labelStyle}>Motion</span>
+                    <PillToggle
+                      options={['Full', 'Reduced']}
+                      active={motionReduced ? 'Reduced' : 'Full'}
+                      onChange={handleMotionToggle}
+                    />
+                    <div style={{ marginTop: 14 }}>
+                      <span style={labelStyle}>Text Size</span>
+                      <div style={{ display: 'flex', gap: 6 }}>
+                        {fontLabels.map(([scale, label]) => {
+                          const active = fontScale === scale
+                          return (
+                            <button
+                              key={scale}
+                              onClick={() => handleFontScale(scale)}
+                              style={{
+                                flex: 1, height: 30, borderRadius: 4,
+                                fontSize: 12, fontFamily: 'var(--font-sans, sans-serif)',
+                                cursor: 'pointer', transition: 'all 0.15s ease',
+                                backgroundColor: active ? 'var(--accent)' : 'transparent',
+                                color: active ? 'var(--bg)' : 'var(--muted)',
+                                border: active ? 'none' : '1px solid var(--border)',
+                                fontWeight: active ? 600 : 400,
+                              }}
+                            >
+                              {label}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </m.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Mobile nav — flex space-between ── */}
+        <div
+          className="container flex md:hidden"
+          style={{ height: 64, alignItems: 'center', justifyContent: 'space-between' }}
+        >
           <Link
             href="/"
             style={{
@@ -261,191 +396,52 @@ export default function Nav() {
             SH<span style={{ color: 'var(--accent)' }}>.</span>
           </Link>
 
-          {/* Desktop right side — also shown on mobile for case study pages */}
-          <div
-            className={isCaseStudy ? 'flex' : 'hidden md:flex'}
-            style={{ alignItems: 'center' }}
-          >
-            {/* Nav links — hidden on case study pages */}
-            {!isCaseStudy && (
-              <>
-                <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
-                  {navLinks.map((l) => (
-                    <NavLink key={l.label} label={l.label} href={l.href} />
-                  ))}
-                </div>
-
-                {/* Divider */}
-                <div
-                  style={{
-                    width: 1,
-                    height: 16,
-                    background: 'var(--border)',
-                    margin: '0 12px',
-                  }}
-                />
-              </>
-            )}
-
-            {/* Icon buttons */}
+          {/* Mobile: case study shows controls, home shows hamburger */}
+          {isCaseStudy ? (
             <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-              {/* Theme toggle */}
               <button
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
                 style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: 6,
-                  background: 'transparent',
-                  border: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  color: 'var(--muted)',
-                  transition: 'color 0.2s ease',
+                  width: 28, height: 28, borderRadius: 6,
+                  background: 'transparent', border: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', color: 'var(--muted)',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
               >
                 {theme === 'dark' ? <Moon size={15} /> : <Sun size={15} />}
               </button>
-
-              {/* Accessibility toggle + dropdown */}
-              <div style={{ position: 'relative' }}>
-                <button
-                  ref={accessBtnRef}
-                  data-a11y-toggle=""
-                  onClick={() => setIsAccessibilityOpen((v) => !v)}
-                  aria-label="Accessibility settings"
-                  style={{
-                    width: 28,
-                    height: 28,
-                    borderRadius: 6,
-                    background: isAccessibilityOpen ? 'var(--bg-card)' : 'transparent',
-                    border: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    color: isAccessibilityOpen ? 'var(--text)' : 'var(--muted)',
-                    transition: 'color 0.2s ease, background-color 0.2s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isAccessibilityOpen) e.currentTarget.style.color = 'var(--text)'
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isAccessibilityOpen) e.currentTarget.style.color = 'var(--muted)'
-                  }}
-                >
-                  <SlidersHorizontal size={15} />
-                </button>
-
-                {/* Accessibility dropdown panel — desktop only */}
-                <AnimatePresence>
-                  {!isMobile && isAccessibilityOpen && (
-                    <m.div
-                      ref={panelRef}
-                      key="a11y-dropdown"
-                      initial={{ opacity: 0, y: -8, scale: 0.97 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -8, scale: 0.97 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-                      style={{
-                        position: 'absolute',
-                        top: 'calc(100% + 8px)',
-                        right: 0,
-                        width: 210,
-                        background: 'var(--bg-card)',
-                        border: '1px solid var(--border)',
-                        borderRadius: 8,
-                        padding: 16,
-                        boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-                        zIndex: 9999,
-                      }}
-                    >
-                      {/* Motion */}
-                      <span style={labelStyle}>Motion</span>
-                      <PillToggle
-                        options={['Full', 'Reduced']}
-                        active={motionReduced ? 'Reduced' : 'Full'}
-                        onChange={handleMotionToggle}
-                      />
-
-                      {/* Text Size */}
-                      <div style={{ marginTop: 14 }}>
-                        <span style={labelStyle}>Text Size</span>
-                        <div style={{ display: 'flex', gap: 6 }}>
-                          {fontLabels.map(([scale, label]) => {
-                            const active = fontScale === scale
-                            return (
-                              <button
-                                key={scale}
-                                onClick={() => handleFontScale(scale)}
-                                style={{
-                                  flex: 1,
-                                  height: 30,
-                                  borderRadius: 4,
-                                  fontSize: 12,
-                                  fontFamily: 'var(--font-sans, sans-serif)',
-                                  cursor: 'pointer',
-                                  transition: 'all 0.15s ease',
-                                  backgroundColor: active ? 'var(--accent)' : 'transparent',
-                                  color: active ? 'var(--bg)' : 'var(--muted)',
-                                  border: active ? 'none' : '1px solid var(--border)',
-                                  fontWeight: active ? 600 : 400,
-                                }}
-                              >
-                                {label}
-                              </button>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    </m.div>
-                  )}
-                </AnimatePresence>
-              </div>
+              <button
+                data-a11y-toggle=""
+                onClick={() => setIsAccessibilityOpen((v) => !v)}
+                aria-label="Accessibility settings"
+                style={{
+                  width: 28, height: 28, borderRadius: 6,
+                  background: isAccessibilityOpen ? 'var(--bg-card)' : 'transparent',
+                  border: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: isAccessibilityOpen ? 'var(--text)' : 'var(--muted)',
+                }}
+              >
+                <SlidersHorizontal size={15} />
+              </button>
             </div>
-          </div>
-
-          {/* Mobile hamburger — hidden on case study pages */}
-          {!isCaseStudy && (
+          ) : (
             <button
-              className="flex md:hidden flex-col justify-center items-center"
-              style={{
-                width: 32,
-                height: 32,
-                background: 'none',
-                border: 'none',
-                padding: 0,
-                gap: 5,
-              }}
+              style={{ width: 32, height: 32, background: 'none', border: 'none', padding: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 5 }}
               onClick={() => setMobileOpen((v) => !v)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             >
               <m.span
                 animate={mobileOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
                 transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.25 }}
-                style={{
-                  display: 'block',
-                  width: 20,
-                  height: 1,
-                  backgroundColor: 'var(--text)',
-                  transformOrigin: 'center',
-                }}
+                style={{ display: 'block', width: 20, height: 1, backgroundColor: 'var(--text)', transformOrigin: 'center' }}
               />
               <m.span
                 animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
                 transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.25 }}
-                style={{
-                  display: 'block',
-                  width: 20,
-                  height: 1,
-                  backgroundColor: 'var(--text)',
-                  transformOrigin: 'center',
-                }}
+                style={{ display: 'block', width: 20, height: 1, backgroundColor: 'var(--text)', transformOrigin: 'center' }}
               />
             </button>
           )}
