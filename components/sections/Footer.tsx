@@ -72,7 +72,7 @@ export default function Footer() {
             letterSpacing: '0.04em',
           }}
         >
-          © 2026 Siddhant Hada. Built with Next.js + Framer Motion.
+          © 2026 Siddhant Hada. Designed & built by me.
         </span>
         <span
           style={{

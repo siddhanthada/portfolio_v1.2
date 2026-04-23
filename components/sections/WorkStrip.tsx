@@ -1,86 +1,67 @@
 'use client'
 
+const STRIP_ITEMS = [
+  { text: 'Fortune 100 Clients', accent: true },
+  { text: 'VIT Vellore', accent: true },
+  { text: 'Enterprise Design' },
+  { text: 'B2B SaaS' },
+  { text: 'Data Visualisation' },
+  { text: 'Design Systems' },
+  { text: 'Product Design' },
+  { text: 'User Experience (UX)' },
+  { text: 'User Interfaces (UI)' },
+  { text: 'User Research' },
+  { text: 'Information Architecture' },
+  { text: 'Wireframing' },
+  { text: 'Prototyping' },
+  { text: 'Usability Testing' },
+  { text: 'Interaction Design' },
+  { text: 'Visual Design' },
+  { text: 'UX Strategy' },
+  { text: 'Agile Methodology' },
+  { text: 'Stakeholder Management' },
+  { text: 'Cross-functional Collaboration' },
+  { text: 'Problem Solving' },
+  { text: 'Accessibility' },
+]
+
+function Dot() {
+  return (
+    <span
+      style={{
+        display: 'inline-block',
+        fontSize: '16px',
+        color: 'var(--text)',
+        margin: '0 24px',
+        lineHeight: 1,
+        opacity: 0.4,
+      }}
+    >
+      ·
+    </span>
+  )
+}
+
 export default function WorkStrip() {
   const content = (
     <>
-      <span
-        style={{
-          fontFamily: 'var(--font-sans, sans-serif)',
-          fontSize: '12px',
-          color: 'var(--accent)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          fontWeight: 500,
-        }}
-      >
-        Currently at o9 Solutions
-      </span>
-      <Dot />
-      <span
-        style={{
-          fontFamily: 'var(--font-sans, sans-serif)',
-          fontSize: '12px',
-          color: 'var(--accent)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          fontWeight: 500,
-        }}
-      >
-        Ex-LeadSquared
-      </span>
-      <Dot />
-      <span
-        style={{
-          fontFamily: 'var(--font-sans, sans-serif)',
-          fontSize: '12px',
-          color: 'var(--accent)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          fontWeight: 500,
-        }}
-      >
-        B.Tech CS, VIT
-      </span>
-      <Dot />
-      <span
-        style={{
-          fontFamily: 'var(--font-sans, sans-serif)',
-          fontSize: '12px',
-          color: 'var(--accent)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          fontWeight: 500,
-        }}
-      >
-        Fortune 100 Clients
-      </span>
-      <Dot />
-      <span
-        style={{
-          fontFamily: 'var(--font-sans, sans-serif)',
-          fontSize: '12px',
-          color: 'var(--accent)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          fontWeight: 500,
-        }}
-      >
-        Open to Senior Roles
-      </span>
-      <Dot />
-      <span
-        style={{
-          fontFamily: 'var(--font-sans, sans-serif)',
-          fontSize: '12px',
-          color: 'var(--accent)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          fontWeight: 500,
-        }}
-      >
-        Bangalore, India
-      </span>
-      <Dot />
+      {STRIP_ITEMS.map((item) => (
+        <span key={item.text} style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span
+            style={{
+              fontFamily: 'var(--font-sans, sans-serif)',
+              fontSize: '12px',
+              color: 'var(--accent)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              fontWeight: 500,
+            }}
+          >
+            {item.text}
+          </span>
+          <Dot />
+        </span>
+      ))}
     </>
   )
 
@@ -99,7 +80,7 @@ export default function WorkStrip() {
     >
       <div
         className="marquee-track"
-        style={{ '--marquee-speed': '40s' } as React.CSSProperties}
+        style={{ '--marquee-speed': '60s' } as React.CSSProperties}
       >
         <span className="flex items-center" style={{ gap: 0 }}>
           {content}
@@ -109,21 +90,5 @@ export default function WorkStrip() {
         </span>
       </div>
     </div>
-  )
-}
-
-function Dot() {
-  return (
-    <span
-      style={{
-        display: 'inline-block',
-        fontSize: '16px',
-        color: 'var(--text)',
-        margin: '0 24px',
-        lineHeight: 1,
-      }}
-    >
-      ·
-    </span>
   )
 }

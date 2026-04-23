@@ -46,6 +46,7 @@ function ProjectCardInner({
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
+        height: '100%',
         cursor: project.href ? 'pointer' : 'default',
       }}
       variants={{
@@ -65,7 +66,7 @@ function ProjectCardInner({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              opacity: hovered ? 0.9 : 0.7,
+              opacity: 1,
               transition: 'opacity 0.3s ease',
             }}
           >
@@ -100,7 +101,7 @@ function ProjectCardInner({
                 right: 0,
                 bottom: 0,
                 left: 0,
-                opacity: hovered ? 0.9 : 0.7,
+                opacity: 1,
                 transition: 'opacity 0.3s ease',
               }}
             >
@@ -115,9 +116,8 @@ function ProjectCardInner({
                 alt={project.name}
                 fill
                 style={{
-                  objectFit: 'cover',
-                  objectPosition: 'top center',
-                  mixBlendMode: 'luminosity',
+                  objectFit: 'contain',
+                  objectPosition: 'center',
                 }}
               />
             </div>
@@ -272,7 +272,7 @@ function ProjectCard({
 }) {
   if (project.href) {
     return (
-      <Link href={project.href} style={{ display: 'block', textDecoration: 'none' }}>
+      <Link href={project.href} style={{ display: 'block', textDecoration: 'none', height: '100%' }}>
         <ProjectCardInner project={project} cardRef={cardRef} />
       </Link>
     )
@@ -423,26 +423,27 @@ export default function FeaturedWork() {
           className="hidden md:grid"
           style={{
             gridTemplateColumns: '1fr 1fr',
+            gridAutoRows: '1fr',
             gap: GAP,
           }}
         >
           {/* Card 1 — anchor: de-spins from -1.5° */}
-          <m.div ref={card1Ref} style={{ rotate: card1rot }}>
+          <m.div ref={card1Ref} style={{ rotate: card1rot, height: '100%' }}>
             <ProjectCard project={projects[0]} />
           </m.div>
 
           {/* Card 2 — fans to top-right */}
-          <m.div style={{ x: card2x, y: card2y, rotate: card2rot, scale: card2scale }}>
+          <m.div style={{ x: card2x, y: card2y, rotate: card2rot, scale: card2scale, height: '100%' }}>
             <ProjectCard project={projects[1]} />
           </m.div>
 
           {/* Card 3 — fans to bottom-left */}
-          <m.div style={{ x: card3x, y: card3y, rotate: card3rot, scale: card3scale }}>
+          <m.div style={{ x: card3x, y: card3y, rotate: card3rot, scale: card3scale, height: '100%' }}>
             <ProjectCard project={projects[2]} />
           </m.div>
 
           {/* Card 4 — fans to bottom-right */}
-          <m.div style={{ x: card4x, y: card4y, rotate: card4rot, scale: card4scale }}>
+          <m.div style={{ x: card4x, y: card4y, rotate: card4rot, scale: card4scale, height: '100%' }}>
             <ProjectCard project={projects[3]} />
           </m.div>
         </div>

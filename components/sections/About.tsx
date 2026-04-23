@@ -157,7 +157,7 @@ export default function About() {
             {/* CTA */}
             <ScrollReveal delay={0.4}>
               <a
-                href="/work/resume/Siddhant_Hada_Resume.pdf"
+                href="/work/resume/Siddhant_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline-fill"

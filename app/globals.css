@@ -2,9 +2,9 @@
 
 /* ─── Design Tokens ──────────────────────────────────────────────────────── */
 :root {
-  --bg:         #080808;
-  --bg-card:    #111111;
-  --border:     #1E1E1E;
+  --bg:         #05070E;
+  --bg-card:    #0A0D15;
+  --border:     #181C28;
   --text:       #F0EDE8;
   --muted:      #717171;
   --accent:     #C8FF00;
@@ -86,10 +86,28 @@ html.has-custom-cursor * {
 
 body {
   background-color: var(--bg);
+  background-image: url('/stars.svg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* ─── Starfield — sections transparent in dark mode so stars show through ─── */
+section {
+  background-color: transparent !important;
+}
+
+[data-theme="light"] body {
+  background-image: none;
+}
+
+[data-theme="light"] section {
+  background-color: var(--bg) !important;
 }
 
 /* ─── Noise Texture ──────────────────────────────────────────────────────── */

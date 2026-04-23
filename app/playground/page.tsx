@@ -192,10 +192,10 @@ export default function PlaygroundPage() {
             <span
               style={{
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 11,
+                fontSize: 10,
                 color: 'var(--accent)',
                 textTransform: 'uppercase',
-                letterSpacing: '0.12em',
+                letterSpacing: '0.18em',
               }}
             >
               Playground
@@ -213,7 +213,8 @@ export default function PlaygroundPage() {
               fontWeight: 400,
               color: 'var(--text)',
               marginTop: 12,
-              lineHeight: 1.15,
+              lineHeight: 1.1,
+              letterSpacing: '-0.03em',
             }}
           >
             Things I make when no one is watching.
@@ -247,10 +248,10 @@ export default function PlaygroundPage() {
             <span
               style={{
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 11,
+                fontSize: 10,
                 color: 'var(--accent)',
                 textTransform: 'uppercase',
-                letterSpacing: '0.1em',
+                letterSpacing: '0.18em',
               }}
             >
               Sketches
@@ -262,6 +263,8 @@ export default function PlaygroundPage() {
                 fontWeight: 500,
                 color: 'var(--text)',
                 marginTop: 8,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.2,
               }}
             >
               Pencil on paper
@@ -364,13 +367,14 @@ export default function PlaygroundPage() {
                   </div>
 
                   {/* Info */}
-                  <div style={{ padding: 16 }}>
+                  <div style={{ padding: 20 }}>
                     <div
                       style={{
                         fontFamily: 'var(--font-sans, sans-serif)',
-                        fontSize: 14,
+                        fontSize: 'var(--text-sm)',
                         fontWeight: 500,
                         color: 'var(--text)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       {sketch.name}
@@ -378,9 +382,10 @@ export default function PlaygroundPage() {
                     <div
                       style={{
                         fontFamily: 'var(--font-mono, monospace)',
-                        fontSize: 11,
+                        fontSize: 10,
                         color: 'var(--muted)',
                         marginTop: 4,
+                        letterSpacing: '0.08em',
                       }}
                     >
                       {sketch.meta}
@@ -509,10 +514,10 @@ export default function PlaygroundPage() {
             <span
               style={{
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 11,
+                fontSize: 10,
                 color: 'var(--accent)',
                 textTransform: 'uppercase',
-                letterSpacing: '0.1em',
+                letterSpacing: '0.18em',
               }}
             >
               Rides
@@ -524,6 +529,8 @@ export default function PlaygroundPage() {
                 fontWeight: 500,
                 color: 'var(--text)',
                 marginTop: 8,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.2,
               }}
             >
               Rode There
@@ -558,10 +565,10 @@ export default function PlaygroundPage() {
             <span
               style={{
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 11,
+                fontSize: 10,
                 color: 'var(--accent)',
                 textTransform: 'uppercase',
-                letterSpacing: '0.1em',
+                letterSpacing: '0.18em',
               }}
             >
               Games
@@ -573,6 +580,8 @@ export default function PlaygroundPage() {
                 fontWeight: 500,
                 color: 'var(--text)',
                 marginTop: 8,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.2,
               }}
             >
               Play Something
@@ -629,7 +638,7 @@ export default function PlaygroundPage() {
                       fontSize: 'var(--text-sm)',
                       color: 'var(--muted)',
                       marginTop: 6,
-                      lineHeight: 1.6,
+                      lineHeight: 1.7,
                       flex: 1,
                     }}
                   >
@@ -685,10 +694,10 @@ export default function PlaygroundPage() {
             <span
               style={{
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 11,
+                fontSize: 10,
                 color: 'var(--accent)',
                 textTransform: 'uppercase',
-                letterSpacing: '0.1em',
+                letterSpacing: '0.18em',
               }}
             >
               Experiments
@@ -700,9 +709,11 @@ export default function PlaygroundPage() {
                 fontWeight: 500,
                 color: 'var(--text)',
                 marginTop: 8,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.2,
               }}
             >
-              Built This
+              Built These
             </h2>
             <p
               style={{
@@ -759,7 +770,7 @@ export default function PlaygroundPage() {
                       fontSize: 10,
                       color: 'var(--accent)',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.1em',
+                      letterSpacing: '0.18em',
                       marginBottom: 14,
                     }}
                   >
