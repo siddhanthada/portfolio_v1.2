@@ -64,7 +64,8 @@ const fadeIn = (delay: number) => ({
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: EASE } },
 })
 
-const H_SIZE = 'clamp(2.6rem, 5.2vw, 6.8rem)'
+const H_SIZE        = 'clamp(2.6rem, 5.2vw, 6.8rem)'
+const H_SIZE_MOBILE = 'clamp(3.4rem, 14vw, 5rem)'
 
 /* ─── Char shimmer ────────────────────────────────────────────────────────── */
 
@@ -420,7 +421,7 @@ export default function Hero() {
     display: 'block',
     fontFamily: 'var(--font-display, serif)',
     fontStyle: 'italic',
-    fontSize: H_SIZE,
+    fontSize: isMobile ? H_SIZE_MOBILE : H_SIZE,
     fontWeight: 400,
     color: 'var(--text)',
     letterSpacing: '-0.02em',
@@ -429,7 +430,7 @@ export default function Hero() {
   const displayStyle = (extra?: React.CSSProperties): React.CSSProperties => ({
     fontFamily: 'var(--font-display, serif)',
     fontStyle: 'italic',
-    fontSize: `calc(${H_SIZE} * 0.96)`,
+    fontSize: isMobile ? `calc(${H_SIZE_MOBILE} * 0.96)` : `calc(${H_SIZE} * 0.96)`,
     fontWeight: 400,
     color: 'var(--text)',
     letterSpacing: '-0.01em',
@@ -497,8 +498,8 @@ export default function Hero() {
       {/* ── Noise ─────────────────────────────────────────────────────────── */}
       <div className="noise-overlay" style={{ zIndex: 2 }} />
 
-      {/* ── Video controls — bottom-right, subtle ─────────────────────────── */}
-      {!prefersReducedMotion && (
+      {/* ── Video controls — bottom-right, desktop only ───────────────────── */}
+      {!prefersReducedMotion && !isMobile && (
         <div style={{
           position: 'absolute', bottom: 32, right: 24, zIndex: 20,
           display: 'flex', gap: 8, alignItems: 'center',
@@ -555,7 +556,7 @@ export default function Hero() {
           paddingTop: 96, paddingBottom: 96,
         }}
       >
-        <div style={{ width: '100%', maxWidth: 760, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ width: '100%', maxWidth: 760, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: isMobile ? -150 : 0 }}>
 
           {/* ── Meta: role + location/time ─────────────────────────────────── */}
           <m.div
@@ -593,10 +594,17 @@ export default function Hero() {
               animate="visible"
               style={{ lineHeight: 0.97 }}
             >
-              {/* Row 1: Designing systems */}
+              {/* Row 1: Designing — Row 2 on mobile: systems */}
               <m.div
                 variants={lv}
-                style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', flexWrap: 'wrap', gap: '0 20px' }}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: isMobile ? 'center' : 'baseline',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  flexWrap: 'wrap',
+                  gap: isMobile ? '8px 0' : '0 20px',
+                }}
               >
                 <span style={sansStyle()}>
                   {renderChars('Designing', charRefs, REF_START_1, false)}
@@ -606,8 +614,8 @@ export default function Hero() {
                 </span>
               </m.div>
 
-              {/* Row 2: that think. */}
-              <m.div variants={lv} style={{ marginTop: '20px' }}>
+              {/* Row 2 desktop / Row 3 mobile: that think. */}
+              <m.div variants={lv} style={{ marginTop: isMobile ? '8px' : '20px' }}>
                 <span style={sansStyle()}>
                   {renderChars('that think.', charRefs, REF_START_3, true)}
                 </span>
@@ -644,7 +652,10 @@ export default function Hero() {
               gap: 0,
               transition: 'background 0.4s ease, border-color 0.4s ease',
             }}>
-              {['Enterprise Product', 'Design Systems', 'Data Visualisation'].map((tag, i) => (
+              {(isMobile
+                ? ['Enterprise Product', 'Design Systems']
+                : ['Enterprise Product', 'Design Systems', 'Data Visualisation']
+              ).map((tag, i) => (
                 <span key={tag} style={{
                   display: 'flex', alignItems: 'center',
                   fontFamily: 'var(--font-sans, sans-serif)',
@@ -660,23 +671,105 @@ export default function Hero() {
             </div>
           </m.div>
 
-          {/* ── CTAs ──────────────────────────────────────────────────────── */}
-          <m.div
-            variants={fadeIn(1.2)}
-            initial="hidden"
-            animate="visible"
-            style={{
-              marginTop: 72,
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              gap: 24, justifyContent: 'center',
-              width: isMobile ? '100%' : 'auto',
-            }}
-          >
+          {/* ── CTAs — desktop only; mobile renders these in the bottom bar ── */}
+          {!isMobile && (
+            <m.div
+              variants={fadeIn(1.2)}
+              initial="hidden"
+              animate="visible"
+              style={{ marginTop: 72, display: 'flex', flexDirection: 'row', gap: 24, justifyContent: 'center' }}
+            >
+              <MagneticButton
+                as="a"
+                href="#work"
+                style={{
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.28)',
+                  backdropFilter: 'blur(12px) saturate(150%)',
+                  WebkitBackdropFilter: 'blur(12px) saturate(150%)',
+                  border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(255,255,255,0.55)',
+                  color: isDark ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.8)',
+                  boxShadow: isDark
+                    ? '0 2px 12px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12)'
+                    : '0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.7)',
+                  transition: 'background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
+                }}
+              >
+                View Work <ArrowDown size={14} />
+              </MagneticButton>
+              <MagneticButton
+                as="a"
+                href="/work/resume/Siddhant_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  backgroundColor: 'var(--accent)',
+                  color: 'var(--bg)',
+                  fontWeight: 600,
+                  border: '1px solid var(--accent)',
+                }}
+              >
+                Resume <ArrowUpRight size={14} />
+              </MagneticButton>
+            </m.div>
+          )}
+
+        </div>
+      </div>
+
+      {/* ── Mobile bottom bar — controls (right) + CTAs (stacked) ────────── */}
+      {isMobile && (
+        <m.div
+          variants={fadeIn(1.2)}
+          initial="hidden"
+          animate="visible"
+          style={{
+            position: 'absolute',
+            bottom: 0, left: 0, right: 0,
+            zIndex: 20,
+            padding: '0 20px 36px',
+          }}
+        >
+          {/* Video controls — right aligned, above CTAs */}
+          {!prefersReducedMotion && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginBottom: 16 }}>
+              <button
+                onClick={togglePlay}
+                aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                style={{
+                  width: 32, height: 32, borderRadius: 8,
+                  background: 'rgba(8,8,8,0.45)',
+                  backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', color: 'rgba(240,237,232,0.45)',
+                }}
+              >
+                {isPlaying ? <Pause size={12} /> : <Play size={12} />}
+              </button>
+              <button
+                onClick={toggleMute}
+                aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                style={{
+                  width: 32, height: 32, borderRadius: 8,
+                  background: 'rgba(8,8,8,0.45)',
+                  backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', color: 'rgba(240,237,232,0.45)',
+                }}
+              >
+                {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
+              </button>
+            </div>
+          )}
+
+          {/* CTAs — stacked */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <MagneticButton
               as="a"
               href="#work"
               style={{
+                width: '100%', justifyContent: 'center',
                 backgroundColor: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.28)',
                 backdropFilter: 'blur(12px) saturate(150%)',
                 WebkitBackdropFilter: 'blur(12px) saturate(150%)',
@@ -685,8 +778,6 @@ export default function Hero() {
                 boxShadow: isDark
                   ? '0 2px 12px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12)'
                   : '0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.7)',
-                transition: 'background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
-                ...(isMobile && { width: '100%', justifyContent: 'center' }),
               }}
             >
               View Work <ArrowDown size={14} />
@@ -697,19 +788,18 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
+                width: '100%', justifyContent: 'center',
                 backgroundColor: 'var(--accent)',
                 color: 'var(--bg)',
                 fontWeight: 600,
                 border: '1px solid var(--accent)',
-                ...(isMobile && { width: '100%', justifyContent: 'center' }),
               }}
             >
               Resume <ArrowUpRight size={14} />
             </MagneticButton>
-          </m.div>
-
-        </div>
-      </div>
+          </div>
+        </m.div>
+      )}
     </section>
   )
 }
