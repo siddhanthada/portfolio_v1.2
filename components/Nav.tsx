@@ -132,7 +132,6 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false)
-  const [motionReduced, setMotionReduced] = useState(false)
   const [fontScale, setFontScale] = useState<FontScale>('md')
   const [cursorType, setCursorType] = useState<CursorType>('motion')
   const prefersReducedMotion = useReducedMotion()
@@ -156,11 +155,6 @@ export default function Nav() {
 
   // Restore preferences on mount
   useEffect(() => {
-    const storedMotion = localStorage.getItem('reduced-motion') === 'true'
-    if (storedMotion) {
-      setMotionReduced(true)
-      document.documentElement.setAttribute('data-reduced-motion', 'true')
-    }
     const storedFont = localStorage.getItem('font-scale') as FontScale | null
     if (storedFont && FONT_SIZES[storedFont]) {
       setFontScale(storedFont)
@@ -196,18 +190,6 @@ export default function Nav() {
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [isAccessibilityOpen])
-
-  const handleMotionToggle = (val: string) => {
-    const reduced = val === 'Reduced'
-    setMotionReduced(reduced)
-    if (reduced) {
-      document.documentElement.setAttribute('data-reduced-motion', 'true')
-      localStorage.setItem('reduced-motion', 'true')
-    } else {
-      document.documentElement.removeAttribute('data-reduced-motion')
-      localStorage.removeItem('reduced-motion')
-    }
-  }
 
   const handleFontScale = (scale: FontScale) => {
     setFontScale(scale)
@@ -350,36 +332,28 @@ export default function Nav() {
                       zIndex: 9999,
                     }}
                   >
-                    <span style={labelStyle}>Motion</span>
-                    <PillToggle
-                      options={['Full', 'Reduced']}
-                      active={motionReduced ? 'Reduced' : 'Full'}
-                      onChange={handleMotionToggle}
-                    />
-                    <div style={{ marginTop: 14 }}>
-                      <span style={labelStyle}>Text Size</span>
-                      <div style={{ display: 'flex', gap: 6 }}>
-                        {fontLabels.map(([scale, label]) => {
-                          const active = fontScale === scale
-                          return (
-                            <button
-                              key={scale}
-                              onClick={() => handleFontScale(scale)}
-                              style={{
-                                flex: 1, height: 30, borderRadius: 4,
-                                fontSize: 12, fontFamily: 'var(--font-sans, sans-serif)',
-                                cursor: 'pointer', transition: 'all 0.15s ease',
-                                backgroundColor: active ? 'var(--accent)' : 'transparent',
-                                color: active ? 'var(--bg)' : 'var(--muted)',
-                                border: active ? 'none' : '1px solid var(--border)',
-                                fontWeight: active ? 600 : 400,
-                              }}
-                            >
-                              {label}
-                            </button>
-                          )
-                        })}
-                      </div>
+                    <span style={labelStyle}>Text Size</span>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      {fontLabels.map(([scale, label]) => {
+                        const active = fontScale === scale
+                        return (
+                          <button
+                            key={scale}
+                            onClick={() => handleFontScale(scale)}
+                            style={{
+                              flex: 1, height: 30, borderRadius: 4,
+                              fontSize: 12, fontFamily: 'var(--font-sans, sans-serif)',
+                              cursor: 'pointer', transition: 'all 0.15s ease',
+                              backgroundColor: active ? 'var(--accent)' : 'transparent',
+                              color: active ? 'var(--bg)' : 'var(--muted)',
+                              border: active ? 'none' : '1px solid var(--border)',
+                              fontWeight: active ? 600 : 400,
+                            }}
+                          >
+                            {label}
+                          </button>
+                        )
+                      })}
                     </div>
                     <div style={{ marginTop: 14 }}>
                       <span style={labelStyle}>Cursor</span>
@@ -570,36 +544,28 @@ export default function Nav() {
                     zIndex: 9999,
                   }}
                 >
-                  <span style={labelStyle}>Motion</span>
-                  <PillToggle
-                    options={['Full', 'Reduced']}
-                    active={motionReduced ? 'Reduced' : 'Full'}
-                    onChange={handleMotionToggle}
-                  />
-                  <div style={{ marginTop: 14 }}>
-                    <span style={labelStyle}>Text Size</span>
-                    <div style={{ display: 'flex', gap: 6 }}>
-                      {fontLabels.map(([scale, label]) => {
-                        const active = fontScale === scale
-                        return (
-                          <button
-                            key={scale}
-                            onClick={() => handleFontScale(scale)}
-                            style={{
-                              flex: 1, height: 30, borderRadius: 4,
-                              fontSize: 12, fontFamily: 'var(--font-sans, sans-serif)',
-                              cursor: 'pointer', transition: 'all 0.15s ease',
-                              backgroundColor: active ? 'var(--accent)' : 'transparent',
-                              color: active ? 'var(--bg)' : 'var(--muted)',
-                              border: active ? 'none' : '1px solid var(--border)',
-                              fontWeight: active ? 600 : 400,
-                            }}
-                          >
-                            {label}
-                          </button>
-                        )
-                      })}
-                    </div>
+                  <span style={labelStyle}>Text Size</span>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {fontLabels.map(([scale, label]) => {
+                      const active = fontScale === scale
+                      return (
+                        <button
+                          key={scale}
+                          onClick={() => handleFontScale(scale)}
+                          style={{
+                            flex: 1, height: 30, borderRadius: 4,
+                            fontSize: 12, fontFamily: 'var(--font-sans, sans-serif)',
+                            cursor: 'pointer', transition: 'all 0.15s ease',
+                            backgroundColor: active ? 'var(--accent)' : 'transparent',
+                            color: active ? 'var(--bg)' : 'var(--muted)',
+                            border: active ? 'none' : '1px solid var(--border)',
+                            fontWeight: active ? 600 : 400,
+                          }}
+                        >
+                          {label}
+                        </button>
+                      )
+                    })}
                   </div>
                   <div style={{ marginTop: 14 }}>
                     <span style={labelStyle}>Cursor</span>

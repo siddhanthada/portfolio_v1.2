@@ -645,8 +645,19 @@ export default function PlaygroundPage() {
                   </div>
                   <m.button
                     onClick={() => openGame(i)}
-                    whileHover={prefersReducedMotion ? {} : { backgroundColor: 'var(--accent)', color: 'var(--bg)', borderColor: 'var(--accent)' }}
-                    transition={{ duration: 0.15 }}
+                    onMouseEnter={(e) => {
+                      if (prefersReducedMotion) return
+                      const el = e.currentTarget
+                      el.style.backgroundColor = 'var(--accent)'
+                      el.style.color = 'var(--bg)'
+                      el.style.borderColor = 'var(--accent)'
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget
+                      el.style.backgroundColor = 'transparent'
+                      el.style.color = 'var(--text)'
+                      el.style.borderColor = 'var(--border)'
+                    }}
                     style={{
                       marginTop: 20,
                       border: '1px solid var(--border)',
@@ -658,6 +669,7 @@ export default function PlaygroundPage() {
                       fontSize: 13,
                       cursor: 'pointer',
                       alignSelf: 'flex-start',
+                      transition: 'background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease',
                     }}
                   >
                     Play
@@ -744,14 +756,12 @@ export default function PlaygroundPage() {
                     delay: i * 0.1,
                     ease: [0.25, 1, 0.5, 1],
                   }}
-                  whileHover={
-                    prefersReducedMotion
-                      ? {}
-                      : {
-                          borderColor: 'var(--accent)',
-                          transition: { duration: 0.2 },
-                        }
-                  }
+                  onMouseEnter={(e) => {
+                    if (!prefersReducedMotion) e.currentTarget.style.borderColor = 'var(--accent)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--border)'
+                  }}
                   style={{
                     background: 'var(--bg-card)',
                     border: '1px solid var(--border)',
@@ -760,6 +770,7 @@ export default function PlaygroundPage() {
                     opacity: plugin.opacity,
                     display: 'flex',
                     flexDirection: 'column',
+                    transition: 'border-color 0.2s ease',
                   }}
                 >
                   {/* Tag */}
