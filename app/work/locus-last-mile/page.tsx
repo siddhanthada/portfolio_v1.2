@@ -373,7 +373,7 @@ export default function LocusLastMile() {
                 marginBottom: 24,
               }}
             >
-              Case Study 02
+              Case Study 04
             </span>
           </m.div>
 

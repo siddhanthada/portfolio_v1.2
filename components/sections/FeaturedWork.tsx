@@ -62,12 +62,9 @@ function ProjectCardInner({
             style={{
               width: '100%',
               height: '100%',
-              background: project.gradient,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              opacity: 1,
-              transition: 'opacity 0.3s ease',
             }}
           >
             <Image
@@ -91,7 +88,6 @@ function ProjectCardInner({
               overflow: 'hidden',
               width: '100%',
               height: '100%',
-              background: project.gradient,
             }}
           >
             <div
@@ -111,7 +107,7 @@ function ProjectCardInner({
                     ? '/work/locus-last-mile/assignment-dashboard.png'
                     : project.slug === 'charts-modernisation'
                     ? '/work/charts-modernisation/charts-hero.png'
-                    : '/work/customer-360/img-360-with-all-widgets.png'
+                    : '/work/customer-360-new/hero-image.png'
                 }
                 alt={project.name}
                 fill

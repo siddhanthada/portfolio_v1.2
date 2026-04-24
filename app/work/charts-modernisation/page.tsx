@@ -1790,7 +1790,7 @@ export default function ChartsModernisation() {
           </Link>
 
           <Link
-            href="/work/locus-last-mile"
+            href="/work/customer-360"
             style={{
               fontFamily: 'var(--font-mono, monospace)',
               fontSize: '12px',
@@ -1801,7 +1801,7 @@ export default function ChartsModernisation() {
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
           >
-            Next Case Study: Locus Last Mile →
+            Next Case Study: Customer 360 →
           </Link>
         </div>
       </div>

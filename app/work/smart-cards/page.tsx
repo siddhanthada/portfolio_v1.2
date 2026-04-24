@@ -377,7 +377,7 @@ export default function SmartCards() {
                 marginBottom: 24,
               }}
             >
-              Case Study 04
+              Case Study 03
             </span>
           </m.div>
 
@@ -1362,7 +1362,7 @@ export default function SmartCards() {
             {'← Back to Work'}
           </Link>
           <Link
-            href="/work/charts-modernisation"
+            href="/work/locus-last-mile"
             style={{
               fontFamily: 'var(--font-sans, sans-serif)',
               fontSize: 'var(--text-base)',
@@ -1373,7 +1373,7 @@ export default function SmartCards() {
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
           >
-            {'Next Case Study: Modernising Data Visualisation →'}
+            {'Next Case Study: Locus Last Mile →'}
           </Link>
         </div>
       </div>
