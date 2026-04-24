@@ -235,7 +235,7 @@ export default function Hero() {
     }
 
     setup(darkContainerRef.current,  '/work/hero-bg/sky-dark.mp4',   darkVideoRef,  darkVideoBRef,  true)
-    setup(lightContainerRef.current, '/work/hero-bg/sky-light2.mp4', lightVideoRef, lightVideoBRef, false)
+    setup(lightContainerRef.current, '/work/hero-bg/sky-light.mp4', lightVideoRef, lightVideoBRef, false)
 
     // Cross-fade: swap active ↔ standby with overlapping opacities
     const doCrossfade = () => {
