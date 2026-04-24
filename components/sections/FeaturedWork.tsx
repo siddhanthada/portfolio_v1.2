@@ -115,6 +115,7 @@ function ProjectCardInner({
                 }
                 alt={project.name}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 style={{
                   objectFit: 'contain',
                   objectPosition: 'center',

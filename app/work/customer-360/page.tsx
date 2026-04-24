@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { m, LazyMotion, domAnimation } from 'framer-motion'
+import { m } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
@@ -36,11 +36,11 @@ function SectionHeading({
         style={{
           display: 'block',
           fontFamily: 'var(--font-mono, monospace)',
-          fontSize: '11px',
+          fontSize: '10px',
           color: 'var(--accent)',
-          letterSpacing: '0.12em',
+          letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          marginBottom: 8,
+          marginBottom: 10,
         }}
       >
         {num}
@@ -51,7 +51,8 @@ function SectionHeading({
           fontSize: 'var(--text-2xl)',
           fontWeight: 500,
           color: 'var(--text)',
-          lineHeight: 1.25,
+          lineHeight: 1.2,
+          letterSpacing: '-0.02em',
           marginBottom: subtitle ? 8 : 0,
         }}
       >
@@ -63,7 +64,7 @@ function SectionHeading({
             fontFamily: 'var(--font-sans, sans-serif)',
             fontSize: 'var(--text-base)',
             color: 'var(--muted)',
-            lineHeight: 1.6,
+            lineHeight: 1.7,
           }}
         >
           {subtitle}
@@ -79,9 +80,9 @@ function Label({ children }: { children: React.ReactNode }) {
       style={{
         display: 'block',
         fontFamily: 'var(--font-mono, monospace)',
-        fontSize: '11px',
+        fontSize: '10px',
         color: 'var(--accent)',
-        letterSpacing: '0.12em',
+        letterSpacing: '0.18em',
         textTransform: 'uppercase',
         marginBottom: 16,
       }}
@@ -164,7 +165,7 @@ export default function Customer360() {
   }
 
   return (
-    <LazyMotion features={domAnimation}>
+    <>
 
       {/* Mobile progress bar */}
       <div
@@ -192,6 +193,7 @@ export default function Customer360() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <div
         ref={heroRef}
+        className="hero-stars"
         style={{
           minHeight: '100svh',
           backgroundColor: 'var(--bg)',
@@ -240,9 +242,9 @@ export default function Customer360() {
               style={{
                 display: 'block',
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: '11px',
+                fontSize: '10px',
                 color: 'var(--accent)',
-                letterSpacing: '0.15em',
+                letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginBottom: 16,
               }}
@@ -257,7 +259,8 @@ export default function Customer360() {
                 fontSize: 'clamp(3rem, 8vw, 7rem)',
                 fontWeight: 400,
                 color: 'var(--text)',
-                lineHeight: 1.1,
+                lineHeight: 1.05,
+                letterSpacing: '-0.03em',
                 marginBottom: 24,
               }}
             >
@@ -318,7 +321,7 @@ export default function Customer360() {
                         fontFamily: 'var(--font-mono, monospace)',
                         fontSize: '10px',
                         color: 'var(--muted)',
-                        letterSpacing: '0.1em',
+                        letterSpacing: '0.15em',
                         textTransform: 'uppercase',
                         marginBottom: 4,
                       }}
@@ -329,9 +332,9 @@ export default function Customer360() {
                       style={{
                         display: 'block',
                         fontFamily: 'var(--font-sans, sans-serif)',
-                        fontSize: '14px',
+                        fontSize: 'var(--text-sm)',
                         color: 'var(--text)',
-                        fontWeight: isMobile ? 500 : undefined,
+                        fontWeight: 500,
                       }}
                     >
                       {item.value}
@@ -495,7 +498,7 @@ export default function Customer360() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.8, marginBottom: 20 }}>
+              <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.7, marginBottom: 20 }}>
                 Customer 360 consolidates data from various sources into a unified view, empowering organisations to deeply understand and engage with their customers. This case study explores the design journey of creating LeadSquared&apos;s Customer 360 platform from the ground up, prioritising usability and effectiveness to drive enhanced customer relationships and business growth.
               </p>
               <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.8 }}>
@@ -532,7 +535,7 @@ export default function Customer360() {
 
             <ScrollReveal delay={0.1}>
               <Label>Primary Research</Label>
-              <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.8, marginBottom: 28 }}>
+              <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.7, marginBottom: 28 }}>
                 Conducted user interviews with companies already using a similar product for service, or planning to integrate a service application with their CRM. The aim was to answer the 5 Ws (Who, What, When, Where, Why) and H (How).
               </p>
               <div style={{ marginBottom: 48 }}>
@@ -558,7 +561,7 @@ export default function Customer360() {
 
             <ScrollReveal delay={0.1}>
               <Label>Secondary Research</Label>
-              <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.8, marginBottom: 24 }}>
+              <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.7, marginBottom: 24 }}>
                 A unified customer view is not a new product — major competitors include Salesforce, Microsoft Dynamics, SAP Customer Data Platform, and Oracle CX Unity. A focused competitor analysis helped identify gaps and opportunities.
               </p>
               <div style={{ border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden' }}>
@@ -572,7 +575,7 @@ export default function Customer360() {
                             fontFamily: 'var(--font-mono, monospace)',
                             fontSize: '10px',
                             color: 'var(--accent)',
-                            letterSpacing: '0.1em',
+                            letterSpacing: '0.15em',
                             textTransform: 'uppercase',
                             padding: '12px 16px',
                             textAlign: 'left',
@@ -671,9 +674,9 @@ export default function Customer360() {
                 { name: 'Actions',              desc: 'Actions to resolve query' },
               ].map((w, i) => (
                 <ScrollReveal key={w.name} delay={i * 0.08}>
-                  <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 4, padding: 16 }}>
-                    <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: '13px', color: 'var(--text)', fontWeight: 500, marginBottom: 4 }}>{w.name}</p>
-                    <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: '12px', color: 'var(--muted)' }}>{w.desc}</p>
+                  <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 4, padding: 20 }}>
+                    <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-sm)', color: 'var(--text)', fontWeight: 500, marginBottom: 4, letterSpacing: '-0.01em' }}>{w.name}</p>
+                    <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-sm)', color: 'var(--muted)', lineHeight: 1.6 }}>{w.desc}</p>
                   </div>
                 </ScrollReveal>
               ))}
@@ -726,7 +729,7 @@ export default function Customer360() {
             {/* Feature prioritisation */}
             <ScrollReveal delay={0.1}>
               <Label>Feature Prioritisation</Label>
-              <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.8, marginBottom: 24 }}>
+              <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.7, marginBottom: 24 }}>
                 A lot of solutions emerge in design — but working within teams means respecting timelines and tech feasibility. Using an Impact/Effort framework, features were prioritised into Must Have vs Good to Have.
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', border: '1px solid var(--border)', borderRadius: 4, overflow: 'hidden' }}>
@@ -745,7 +748,7 @@ export default function Customer360() {
                       padding: 16,
                     }}
                   >
-                    <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '10px', color: 'var(--accent)', letterSpacing: '0.08em', marginBottom: 10 }}>
+                    <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '10px', color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 10 }}>
                       {quad.label}
                     </p>
                     {quad.items.map((item) => (
@@ -778,7 +781,7 @@ export default function Customer360() {
             ].map((block) => (
               <ScrollReveal key={block.label} delay={0.1}>
                 <div style={{ marginBottom: 64 }}>
-                  <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '11px', color: 'var(--accent)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
+                  <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '10px', color: 'var(--accent)', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12 }}>
                     {block.label}
                   </p>
                   <div style={{ marginBottom: 12 }}>
@@ -813,9 +816,9 @@ export default function Customer360() {
                 { title: 'Help & Documentation', desc: 'Contextual support throughout, reducing time-to-resolve for new admins and agents.' },
               ].map((item, i) => (
                 <ScrollReveal key={item.title} delay={i * 0.1}>
-                  <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 4, padding: 20 }}>
-                    <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-sm)', color: 'var(--text)', fontWeight: 500, marginBottom: 8 }}>{item.title}</p>
-                    <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: '13px', color: 'var(--muted)', lineHeight: 1.6 }}>{item.desc}</p>
+                  <div style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 4, padding: 24 }}>
+                    <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-sm)', color: 'var(--text)', fontWeight: 500, marginBottom: 8, letterSpacing: '-0.01em' }}>{item.title}</p>
+                    <p style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-sm)', color: 'var(--muted)', lineHeight: 1.7 }}>{item.desc}</p>
                   </div>
                 </ScrollReveal>
               ))}
@@ -897,6 +900,6 @@ export default function Customer360() {
           </div>
         </div>
       </div>
-    </LazyMotion>
+    </>
   )
 }

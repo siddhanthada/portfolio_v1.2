@@ -102,6 +102,7 @@ section {
   background-color: transparent !important;
 }
 
+
 [data-theme="light"] body {
   background-image: none;
 }
@@ -207,6 +208,19 @@ section {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border);
+}
+
+/* ─── Case Study Hero Star Background ───────────────────────────────────── */
+.hero-stars {
+  background-image: url('/stars.svg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+[data-theme="light"] .hero-stars {
+  background-image: none;
 }
 
 /* ─── Leaflet Popup Overrides ────────────────────────────────────────────── */

@@ -8,18 +8,15 @@ export default function GlitchOverlay() {
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resize()
-    window.addEventListener('resize', resize)
 
     const handleGlitch = () => {
       if (animatingRef.current) return
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
+
+      // Size canvas to viewport only when animation fires — no persistent resize listener
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
       animatingRef.current = true
 
       try {
@@ -114,10 +111,7 @@ export default function GlitchOverlay() {
     }
 
     window.addEventListener('theme-glitch', handleGlitch)
-    return () => {
-      window.removeEventListener('theme-glitch', handleGlitch)
-      window.removeEventListener('resize', resize)
-    }
+    return () => window.removeEventListener('theme-glitch', handleGlitch)
   }, [])
 
   return (

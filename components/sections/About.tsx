@@ -42,6 +42,7 @@ export default function About() {
                   src="/work/about/my-picture.PNG"
                   alt="Siddhant Hada"
                   fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
                   style={{ objectFit: 'cover', objectPosition: 'top center' }}
                   priority
                 />

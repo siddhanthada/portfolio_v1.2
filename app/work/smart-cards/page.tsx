@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { m, LazyMotion, domAnimation } from 'framer-motion'
+import { m } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
@@ -32,11 +32,11 @@ function SectionHeading({ num, title }: { num: string; title: string }) {
         style={{
           display: 'block',
           fontFamily: 'var(--font-mono, monospace)',
-          fontSize: '11px',
+          fontSize: '10px',
           color: 'var(--accent)',
-          letterSpacing: '0.12em',
+          letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          marginBottom: 8,
+          marginBottom: 10,
         }}
       >
         {num}
@@ -47,7 +47,8 @@ function SectionHeading({ num, title }: { num: string; title: string }) {
           fontSize: 'var(--text-2xl)',
           fontWeight: 500,
           color: 'var(--text)',
-          lineHeight: 1.25,
+          lineHeight: 1.2,
+          letterSpacing: '-0.02em',
           margin: 0,
         }}
       >
@@ -65,9 +66,9 @@ function MonoLabel({ children }: { children: React.ReactNode }) {
         fontFamily: 'var(--font-mono, monospace)',
         fontSize: '10px',
         color: 'var(--accent)',
-        letterSpacing: '0.12em',
+        letterSpacing: '0.18em',
         textTransform: 'uppercase',
-        marginBottom: 8,
+        marginBottom: 10,
       }}
     >
       {children}
@@ -117,7 +118,7 @@ function BodyText({
         fontFamily: 'var(--font-sans, sans-serif)',
         fontSize: 'var(--text-base)',
         color: 'var(--muted)',
-        lineHeight: 1.8,
+        lineHeight: 1.7,
         margin: 0,
         ...style,
       }}
@@ -214,7 +215,7 @@ export default function SmartCards() {
   }
 
   return (
-    <LazyMotion features={domAnimation}>
+    <>
 
       {/* Mobile progress bar */}
       <div
@@ -320,6 +321,7 @@ export default function SmartCards() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <div
         ref={heroRef}
+        className="hero-stars"
         style={{
           minHeight: '100svh',
           backgroundColor: 'var(--bg)',
@@ -368,9 +370,9 @@ export default function SmartCards() {
               style={{
                 display: 'block',
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: '11px',
+                fontSize: '10px',
                 color: 'var(--accent)',
-                letterSpacing: '0.15em',
+                letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginBottom: 24,
               }}
@@ -390,7 +392,7 @@ export default function SmartCards() {
               fontWeight: 400,
               color: 'var(--text)',
               lineHeight: 1.05,
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.03em',
               margin: '0 0 32px',
             }}
           >
@@ -449,7 +451,7 @@ export default function SmartCards() {
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: '10px',
                     color: 'var(--muted)',
-                    letterSpacing: '0.1em',
+                    letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     marginBottom: 4,
                   }}
@@ -858,12 +860,14 @@ export default function SmartCards() {
               },
             ].map((item, i) => (
               <ScrollReveal key={item.num} delay={i * 0.1}>
-                <Card style={{ padding: 20, height: '100%' }}>
+                <Card style={{ padding: 24, height: '100%' }}>
                   <span
                     style={{
                       fontFamily: 'var(--font-mono, monospace)',
-                      fontSize: '11px',
+                      fontSize: '10px',
                       color: 'var(--accent)',
+                      letterSpacing: '0.18em',
+                      textTransform: 'uppercase',
                     }}
                   >
                     {item.num}
@@ -875,6 +879,8 @@ export default function SmartCards() {
                       fontWeight: 500,
                       color: 'var(--text)',
                       margin: '8px 0',
+                      letterSpacing: '-0.01em',
+                      lineHeight: 1.3,
                     }}
                   >
                     {item.title}
@@ -932,12 +938,14 @@ export default function SmartCards() {
               },
             ].map((item, i) => (
               <ScrollReveal key={item.num} delay={i * 0.08}>
-                <Card style={{ padding: 20, height: '100%' }}>
+                <Card style={{ padding: 24, height: '100%' }}>
                   <span
                     style={{
                       fontFamily: 'var(--font-mono, monospace)',
-                      fontSize: '11px',
+                      fontSize: '10px',
                       color: 'var(--accent)',
+                      letterSpacing: '0.18em',
+                      textTransform: 'uppercase',
                     }}
                   >
                     {item.num}
@@ -949,6 +957,8 @@ export default function SmartCards() {
                       fontWeight: 500,
                       color: 'var(--text)',
                       margin: '8px 0',
+                      letterSpacing: '-0.01em',
+                      lineHeight: 1.3,
                     }}
                   >
                     {item.title}
@@ -977,9 +987,9 @@ export default function SmartCards() {
                 style={{
                   display: 'block',
                   fontFamily: 'var(--font-mono, monospace)',
-                  fontSize: '11px',
+                  fontSize: '10px',
                   color: 'var(--accent)',
-                  letterSpacing: '0.12em',
+                  letterSpacing: '0.18em',
                   textTransform: 'uppercase',
                   marginBottom: 16,
                 }}
@@ -1003,9 +1013,9 @@ export default function SmartCards() {
                 style={{
                   display: 'block',
                   fontFamily: 'var(--font-mono, monospace)',
-                  fontSize: '11px',
+                  fontSize: '10px',
                   color: 'var(--accent)',
-                  letterSpacing: '0.12em',
+                  letterSpacing: '0.18em',
                   textTransform: 'uppercase',
                   marginBottom: 16,
                 }}
@@ -1045,7 +1055,7 @@ export default function SmartCards() {
                 fontFamily: 'var(--font-mono, monospace)',
                 fontSize: '10px',
                 color: 'var(--accent)',
-                letterSpacing: '0.12em',
+                letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginBottom: 16,
               }}
@@ -1087,7 +1097,7 @@ export default function SmartCards() {
                 fontFamily: 'var(--font-mono, monospace)',
                 fontSize: '10px',
                 color: 'var(--accent)',
-                letterSpacing: '0.12em',
+                letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginBottom: 16,
                 marginTop: 32,
@@ -1183,7 +1193,7 @@ export default function SmartCards() {
                       fontFamily: 'var(--font-mono, monospace)',
                       fontSize: '10px',
                       color: 'var(--accent)',
-                      letterSpacing: '0.12em',
+                      letterSpacing: '0.18em',
                       textTransform: 'uppercase',
                       marginBottom: 8,
                     }}
@@ -1197,6 +1207,8 @@ export default function SmartCards() {
                       fontWeight: 500,
                       color: 'var(--text)',
                       margin: '0 0 24px',
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1.2,
                     }}
                   >
                     {screen.title}
@@ -1261,14 +1273,16 @@ export default function SmartCards() {
               },
             ].map((item, i) => (
               <ScrollReveal key={item.num} delay={i * 0.1}>
-                <Card style={{ padding: 20 }}>
+                <Card style={{ padding: 24 }}>
                   <span
                     style={{
                       display: 'block',
                       fontFamily: 'var(--font-mono, monospace)',
-                      fontSize: '11px',
+                      fontSize: '10px',
                       color: 'var(--accent)',
-                      marginBottom: 8,
+                      letterSpacing: '0.18em',
+                      textTransform: 'uppercase',
+                      marginBottom: 10,
                     }}
                   >
                     {item.num}
@@ -1300,8 +1314,9 @@ export default function SmartCards() {
                   <span
                     style={{
                       fontFamily: 'var(--font-mono, monospace)',
-                      fontSize: '11px',
+                      fontSize: '10px',
                       color: 'var(--accent)',
+                      letterSpacing: '0.18em',
                       flexShrink: 0,
                       paddingTop: 2,
                     }}
@@ -1363,6 +1378,6 @@ export default function SmartCards() {
         </div>
       </div>
 
-    </LazyMotion>
+    </>
   )
 }

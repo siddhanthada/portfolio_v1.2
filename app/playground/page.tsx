@@ -170,7 +170,6 @@ export default function PlaygroundPage() {
   return (
     <main
       style={{
-        background: 'var(--bg)',
         minHeight: '100vh',
         color: 'var(--text)',
       }}

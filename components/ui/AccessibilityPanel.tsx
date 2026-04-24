@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
 import { Settings, X } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
+import type { CursorType } from '@/components/ui/CustomCursor'
 
 type FontScale = 'sm' | 'md' | 'lg'
 
@@ -69,6 +70,7 @@ export default function AccessibilityPanel() {
   const [open, setOpen] = useState(false)
   const [motionReduced, setMotionReduced] = useState(false)
   const [fontScale, setFontScale] = useState<FontScale>('md')
+  const [cursorType, setCursorType] = useState<CursorType>('motion')
   const panelRef = useRef<HTMLDivElement>(null)
   const { theme, toggleTheme } = useTheme()
 
@@ -85,6 +87,9 @@ export default function AccessibilityPanel() {
       setFontScale(storedFont)
       document.documentElement.style.fontSize = FONT_SIZES[storedFont]
     }
+
+    const storedCursor = localStorage.getItem('cursor-type') as CursorType | null
+    if (storedCursor === 'precise') setCursorType('precise')
   }, [])
 
   // Close on outside click
@@ -124,6 +129,12 @@ export default function AccessibilityPanel() {
     setFontScale(scale)
     document.documentElement.style.fontSize = FONT_SIZES[scale]
     localStorage.setItem('font-scale', scale)
+  }
+
+  const handleCursorType = (type: CursorType) => {
+    setCursorType(type)
+    localStorage.setItem('cursor-type', type)
+    window.dispatchEvent(new CustomEvent('cursor-type-change', { detail: type }))
   }
 
   const fontLabels: [FontScale, string][] = [['sm', 'A−'], ['md', 'A'], ['lg', 'A+']]
@@ -261,6 +272,16 @@ export default function AccessibilityPanel() {
                   )
                 })}
               </div>
+            </div>
+
+            {/* Cursor */}
+            <div style={{ marginTop: 16 }}>
+              <span style={labelStyle}>Cursor</span>
+              <PillToggle
+                options={['Motion', 'Precise']}
+                active={cursorType === 'precise' ? 'Precise' : 'Motion'}
+                onChange={(val) => handleCursorType(val === 'Precise' ? 'precise' : 'motion')}
+              />
             </div>
           </m.div>
         )}

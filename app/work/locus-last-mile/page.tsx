@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { m, LazyMotion, domAnimation } from 'framer-motion'
+import { m } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
@@ -31,11 +31,11 @@ function SectionHeading({ num, title }: { num: string; title: string }) {
         style={{
           display: 'block',
           fontFamily: 'var(--font-mono, monospace)',
-          fontSize: '11px',
+          fontSize: '10px',
           color: 'var(--accent)',
-          letterSpacing: '0.12em',
+          letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          marginBottom: 8,
+          marginBottom: 10,
         }}
       >
         {num}
@@ -46,7 +46,8 @@ function SectionHeading({ num, title }: { num: string; title: string }) {
           fontSize: 'var(--text-2xl)',
           fontWeight: 500,
           color: 'var(--text)',
-          lineHeight: 1.25,
+          lineHeight: 1.2,
+          letterSpacing: '-0.02em',
         }}
       >
         {title}
@@ -61,9 +62,9 @@ function MonoLabel({ children, accent = true }: { children: React.ReactNode; acc
       style={{
         display: 'block',
         fontFamily: 'var(--font-mono, monospace)',
-        fontSize: '11px',
+        fontSize: '10px',
         color: accent ? 'var(--accent)' : 'var(--muted)',
-        letterSpacing: '0.12em',
+        letterSpacing: '0.18em',
         textTransform: 'uppercase',
         marginBottom: 12,
       }}
@@ -220,7 +221,7 @@ export default function LocusLastMile() {
   }
 
   return (
-    <LazyMotion features={domAnimation}>
+    <>
 
       {/* Mobile scroll progress bar */}
       <div
@@ -316,6 +317,7 @@ export default function LocusLastMile() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <div
         ref={heroRef}
+        className="hero-stars"
         style={{
           minHeight: '100svh',
           backgroundColor: 'var(--bg)',
@@ -364,9 +366,9 @@ export default function LocusLastMile() {
               style={{
                 display: 'block',
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: '11px',
+                fontSize: '10px',
                 color: 'var(--accent)',
-                letterSpacing: '0.15em',
+                letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginBottom: 24,
               }}
@@ -388,7 +390,7 @@ export default function LocusLastMile() {
                 fontWeight: 400,
                 color: 'var(--text)',
                 lineHeight: 1.05,
-                letterSpacing: '-0.02em',
+                letterSpacing: '-0.03em',
                 margin: '0 0 16px',
               }}
             >
@@ -460,7 +462,7 @@ export default function LocusLastMile() {
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: '10px',
                     color: 'var(--muted)',
-                    letterSpacing: '0.1em',
+                    letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     marginBottom: 6,
                   }}
@@ -592,7 +594,7 @@ export default function LocusLastMile() {
                     fontFamily: 'var(--font-sans, sans-serif)',
                     fontSize: 'var(--text-base)',
                     color: 'var(--text)',
-                    lineHeight: 1.8,
+                    lineHeight: 1.7,
                     margin: 0,
                   }}
                 >
@@ -606,7 +608,7 @@ export default function LocusLastMile() {
                     fontFamily: 'var(--font-sans, sans-serif)',
                     fontSize: 'var(--text-base)',
                     color: 'var(--muted)',
-                    lineHeight: 1.8,
+                    lineHeight: 1.7,
                     margin: 0,
                   }}
                 >
@@ -684,7 +686,7 @@ export default function LocusLastMile() {
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
                 borderRadius: 4,
-                padding: 28,
+                padding: 24,
                 marginBottom: 20,
               }}
             >
@@ -813,7 +815,7 @@ export default function LocusLastMile() {
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
                 borderRadius: 4,
-                padding: 28,
+                padding: 24,
                 marginBottom: 32,
               }}
             >
@@ -874,7 +876,7 @@ export default function LocusLastMile() {
                       fontFamily: 'var(--font-sans, sans-serif)',
                       fontSize: 'var(--text-base)',
                       color: 'var(--muted)',
-                      lineHeight: 1.8,
+                      lineHeight: 1.7,
                       margin: 0,
                     }}
                   >
@@ -912,7 +914,7 @@ export default function LocusLastMile() {
                 fontFamily: 'var(--font-sans, sans-serif)',
                 fontSize: 'var(--text-base)',
                 color: 'var(--muted)',
-                lineHeight: 1.8,
+                lineHeight: 1.7,
                 marginBottom: 40,
               }}
             >
@@ -959,6 +961,8 @@ export default function LocusLastMile() {
                     fontWeight: 500,
                     color: 'var(--text)',
                     margin: '0 0 16px',
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1.2,
                   }}
                 >
                   {block.title}
@@ -973,7 +977,7 @@ export default function LocusLastMile() {
                             fontFamily: 'var(--font-mono, monospace)',
                             fontSize: '10px',
                             color: 'var(--accent)',
-                            letterSpacing: '0.1em',
+                            letterSpacing: '0.18em',
                             textTransform: 'uppercase',
                             marginBottom: 6,
                           }}
@@ -1000,7 +1004,7 @@ export default function LocusLastMile() {
                       fontFamily: 'var(--font-sans, sans-serif)',
                       fontSize: 'var(--text-base)',
                       color: 'var(--muted)',
-                      lineHeight: 1.8,
+                      lineHeight: 1.7,
                       margin: 0,
                     }}
                   >
@@ -1031,6 +1035,7 @@ export default function LocusLastMile() {
                 fontFamily: 'var(--font-sans, sans-serif)',
                 fontSize: 'var(--text-base)',
                 color: 'var(--muted)',
+                lineHeight: 1.7,
                 marginBottom: 40,
               }}
             >
@@ -1103,6 +1108,8 @@ export default function LocusLastMile() {
                       fontWeight: 500,
                       color: 'var(--text)',
                       margin: '0 0 12px',
+                      letterSpacing: '-0.01em',
+                      lineHeight: 1.3,
                     }}
                   >
                     {card.title}
@@ -1147,6 +1154,7 @@ export default function LocusLastMile() {
                 fontFamily: 'var(--font-sans, sans-serif)',
                 fontSize: 'var(--text-base)',
                 color: 'var(--muted)',
+                lineHeight: 1.7,
                 marginBottom: 40,
               }}
             >
@@ -1236,7 +1244,7 @@ export default function LocusLastMile() {
                 fontFamily: 'var(--font-sans, sans-serif)',
                 fontSize: 'var(--text-base)',
                 color: 'var(--muted)',
-                lineHeight: 1.8,
+                lineHeight: 1.7,
                 marginBottom: 40,
               }}
             >
@@ -1265,6 +1273,8 @@ export default function LocusLastMile() {
                   fontWeight: 500,
                   color: 'var(--text)',
                   margin: '0 0 12px',
+                  letterSpacing: '-0.01em',
+                  lineHeight: 1.3,
                 }}
               >
                 Unidirectional Flow
@@ -1323,6 +1333,8 @@ export default function LocusLastMile() {
                   fontWeight: 500,
                   color: 'var(--text)',
                   margin: '0 0 12px',
+                  letterSpacing: '-0.01em',
+                  lineHeight: 1.3,
                 }}
               >
                 Tabbed View
@@ -1495,6 +1507,8 @@ export default function LocusLastMile() {
                       fontWeight: 500,
                       color: 'var(--text)',
                       margin: '0 0 12px',
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1.2,
                     }}
                   >
                     {block.title}
@@ -1553,7 +1567,7 @@ export default function LocusLastMile() {
                 fontFamily: 'var(--font-sans, sans-serif)',
                 fontSize: 'var(--text-base)',
                 color: 'var(--muted)',
-                lineHeight: 1.8,
+                lineHeight: 1.7,
                 marginBottom: 48,
               }}
             >
@@ -1762,7 +1776,7 @@ export default function LocusLastMile() {
                       fontFamily: 'var(--font-sans, sans-serif)',
                       fontSize: 'var(--text-base)',
                       color: 'var(--muted)',
-                      lineHeight: 1.8,
+                      lineHeight: 1.7,
                       margin: 0,
                     }}
                   >
@@ -1820,6 +1834,6 @@ export default function LocusLastMile() {
         </Link>
       </div>
 
-    </LazyMotion>
+    </>
   )
 }

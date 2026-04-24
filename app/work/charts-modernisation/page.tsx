@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { m, AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion'
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import ScrollReveal from '@/components/motion/ScrollReveal'
 import ImageLightbox from '@/components/ui/ImageLightbox'
 import { Lock } from 'lucide-react'
@@ -57,11 +57,11 @@ function SectionHeading({ num, title }: { num: string; title: string }) {
         style={{
           display: 'block',
           fontFamily: 'var(--font-mono, monospace)',
-          fontSize: '11px',
+          fontSize: '10px',
           color: 'var(--accent)',
-          letterSpacing: '0.12em',
+          letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          marginBottom: 8,
+          marginBottom: 10,
         }}
       >
         {num}
@@ -72,7 +72,8 @@ function SectionHeading({ num, title }: { num: string; title: string }) {
           fontSize: 'var(--text-2xl)',
           fontWeight: 500,
           color: 'var(--text)',
-          lineHeight: 1.25,
+          lineHeight: 1.2,
+          letterSpacing: '-0.02em',
           margin: 0,
         }}
       >
@@ -115,7 +116,7 @@ function BodyText({
         fontFamily: 'var(--font-sans, sans-serif)',
         fontSize: 'var(--text-base)',
         color: muted ? 'var(--muted)' : 'var(--text)',
-        lineHeight: 1.8,
+        lineHeight: 1.7,
         margin: 0,
         marginBottom: mb,
       }}
@@ -154,7 +155,7 @@ function CardLabel({ children }: { children: React.ReactNode }) {
         fontFamily: 'var(--font-mono, monospace)',
         fontSize: '10px',
         color: 'var(--accent)',
-        letterSpacing: '0.12em',
+        letterSpacing: '0.18em',
         textTransform: 'uppercase',
         marginBottom: 10,
       }}
@@ -174,6 +175,7 @@ function CardTitle({ children }: { children: React.ReactNode }) {
         color: 'var(--text)',
         margin: '0 0 10px',
         lineHeight: 1.3,
+        letterSpacing: '-0.01em',
       }}
     >
       {children}
@@ -355,9 +357,9 @@ export default function ChartsModernisation() {
             style={{
               display: 'block',
               fontFamily: 'var(--font-mono, monospace)',
-              fontSize: '11px',
+              fontSize: '10px',
               color: 'var(--accent)',
-              letterSpacing: '0.12em',
+              letterSpacing: '0.18em',
               textTransform: 'uppercase',
               marginBottom: 16,
             }}
@@ -488,7 +490,7 @@ export default function ChartsModernisation() {
   }
 
   return (
-    <LazyMotion features={domAnimation}>
+    <>
       {/* Mobile scroll progress bar */}
       {isMobile && (
         <div
@@ -584,6 +586,7 @@ export default function ChartsModernisation() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <div
         ref={heroRef}
+        className="hero-stars"
         style={{
           backgroundColor: 'var(--bg)',
           paddingTop: isMobile ? 120 : 140,
@@ -627,9 +630,9 @@ export default function ChartsModernisation() {
               style={{
                 display: 'block',
                 fontFamily: 'var(--font-mono, monospace)',
-                fontSize: '11px',
+                fontSize: '10px',
                 color: 'var(--accent)',
-                letterSpacing: '0.15em',
+                letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginBottom: 12,
               }}
@@ -651,7 +654,7 @@ export default function ChartsModernisation() {
                 fontWeight: 400,
                 color: 'var(--text)',
                 lineHeight: 1.05,
-                letterSpacing: '-0.02em',
+                letterSpacing: '-0.03em',
                 margin: '0 0 16px',
               }}
             >
@@ -712,7 +715,7 @@ export default function ChartsModernisation() {
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: '10px',
                     color: 'var(--muted)',
-                    letterSpacing: '0.1em',
+                    letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     marginBottom: 6,
                   }}
@@ -810,14 +813,14 @@ export default function ChartsModernisation() {
                 marginBottom: 16,
               }}
             >
-              <InfoCard padding={20}>
+              <InfoCard padding={24}>
                 <CardLabel>Timeline</CardLabel>
                 <BodyText muted mb={0}>
                   4 months from kickoff to handoff, spanning discovery, definition, design, and developer collaboration.
                 </BodyText>
               </InfoCard>
 
-              <InfoCard padding={20}>
+              <InfoCard padding={24}>
                 <CardLabel>Stakeholders</CardLabel>
                 <BodyText muted mb={0}>
                   Product Manager, Engineering Lead, 3 frontend engineers, Design Systems team, and enterprise customer representatives.
@@ -1158,9 +1161,9 @@ export default function ChartsModernisation() {
                     style={{
                       display: 'block',
                       fontFamily: 'var(--font-mono, monospace)',
-                      fontSize: '11px',
+                      fontSize: '10px',
                       color: 'var(--accent)',
-                      letterSpacing: '0.12em',
+                      letterSpacing: '0.18em',
                       marginBottom: 12,
                     }}
                   >
@@ -1215,6 +1218,8 @@ export default function ChartsModernisation() {
                 fontWeight: 500,
                 color: 'var(--text)',
                 margin: '0 0 16px',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.2,
               }}
             >
               A. Typography in charts
@@ -1239,6 +1244,7 @@ export default function ChartsModernisation() {
                   fontWeight: 500,
                   color: 'var(--text)',
                   margin: '0 0 16px',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 B. Reducing visual noise
@@ -1263,6 +1269,7 @@ export default function ChartsModernisation() {
                   fontWeight: 500,
                   color: 'var(--text)',
                   margin: '0 0 16px',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 C. Fallback and empty states
@@ -1287,6 +1294,7 @@ export default function ChartsModernisation() {
                   fontWeight: 500,
                   color: 'var(--text)',
                   margin: '0 0 16px',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 D. Tooltip redesign
@@ -1319,6 +1327,7 @@ export default function ChartsModernisation() {
                   fontWeight: 500,
                   color: 'var(--text)',
                   margin: '0 0 16px',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 E. Legend positioning and interaction
@@ -1351,6 +1360,7 @@ export default function ChartsModernisation() {
                   fontWeight: 500,
                   color: 'var(--text)',
                   margin: '0 0 16px',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 F. Colour and pattern system
@@ -1376,6 +1386,7 @@ export default function ChartsModernisation() {
                   fontWeight: 500,
                   color: 'var(--text)',
                   margin: '0 0 16px',
+                  letterSpacing: '-0.02em',
                 }}
               >
                 G. Chart container layout
@@ -1700,7 +1711,7 @@ export default function ChartsModernisation() {
             <SectionHeading num="08" title="Reflection" />
           </ScrollReveal>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 48 }}>
             {[
               {
                 num: '01',
@@ -1726,9 +1737,9 @@ export default function ChartsModernisation() {
                   <span
                     style={{
                       fontFamily: 'var(--font-mono, monospace)',
-                      fontSize: '11px',
+                      fontSize: '10px',
                       color: 'var(--accent)',
-                      letterSpacing: '0.12em',
+                      letterSpacing: '0.18em',
                       flexShrink: 0,
                       paddingTop: 4,
                     }}
@@ -1740,7 +1751,7 @@ export default function ChartsModernisation() {
                       fontFamily: 'var(--font-sans, sans-serif)',
                       fontSize: 'var(--text-base)',
                       color: 'var(--muted)',
-                      lineHeight: 1.8,
+                      lineHeight: 1.7,
                       margin: 0,
                     }}
                   >
@@ -1794,6 +1805,6 @@ export default function ChartsModernisation() {
           </Link>
         </div>
       </div>
-    </LazyMotion>
+    </>
   )
 }

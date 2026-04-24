@@ -8,6 +8,7 @@ import { ReactNode } from 'react'
 import CustomCursor from '@/components/ui/CustomCursor'
 import Nav from '@/components/Nav'
 import PageTransition from '@/components/motion/PageTransition'
+import BackToTop from '@/components/ui/BackToTop'
 
 function LenisScrollReset() {
   const lenis = useLenis()
@@ -31,6 +32,7 @@ export default function RootClient({ children }: RootClientProps) {
         <LenisScrollReset />
         <Nav />
         <CustomCursor />
+        <BackToTop />
         <PageTransition>{children}</PageTransition>
       </ReactLenis>
     </LazyMotion>

@@ -166,17 +166,21 @@ export default function ImageLightbox({
                 cursor: 'default',
               }}
             >
-              <img
+              <Image
                 src={src}
                 alt={alt}
+                width={width || 1920}
+                height={height || 1200}
+                sizes="90vw"
                 style={{
                   width: '100%',
-                  height: '100%',
+                  height: 'auto',
                   maxWidth: '90vw',
                   maxHeight: '90vh',
                   objectFit: 'contain',
                   display: 'block',
                 }}
+                unoptimized={src.endsWith('.gif')}
               />
             </m.div>
 

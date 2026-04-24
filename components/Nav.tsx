@@ -6,6 +6,7 @@ import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import { Moon, Sun, SlidersHorizontal } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
+import type { CursorType } from '@/components/ui/CustomCursor'
 
 const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&'
 
@@ -133,6 +134,7 @@ export default function Nav() {
   const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false)
   const [motionReduced, setMotionReduced] = useState(false)
   const [fontScale, setFontScale] = useState<FontScale>('md')
+  const [cursorType, setCursorType] = useState<CursorType>('motion')
   const prefersReducedMotion = useReducedMotion()
   const { theme, toggleTheme } = useTheme()
   const panelRef = useRef<HTMLDivElement>(null)
@@ -164,6 +166,8 @@ export default function Nav() {
       setFontScale(storedFont)
       document.documentElement.style.fontSize = FONT_SIZES[storedFont]
     }
+    const storedCursor = localStorage.getItem('cursor-type') as CursorType | null
+    if (storedCursor === 'precise') setCursorType('precise')
   }, [])
 
   // Close panel on outside click
@@ -209,6 +213,12 @@ export default function Nav() {
     setFontScale(scale)
     document.documentElement.style.fontSize = FONT_SIZES[scale]
     localStorage.setItem('font-scale', scale)
+  }
+
+  const handleCursorType = (type: CursorType) => {
+    setCursorType(type)
+    localStorage.setItem('cursor-type', type)
+    window.dispatchEvent(new CustomEvent('cursor-type-change', { detail: type }))
   }
 
   const fontLabels: [FontScale, string][] = [
@@ -370,6 +380,14 @@ export default function Nav() {
                           )
                         })}
                       </div>
+                    </div>
+                    <div style={{ marginTop: 14 }}>
+                      <span style={labelStyle}>Cursor</span>
+                      <PillToggle
+                        options={['Motion', 'Precise']}
+                        active={cursorType === 'precise' ? 'Precise' : 'Motion'}
+                        onChange={(val) => handleCursorType(val === 'Precise' ? 'precise' : 'motion')}
+                      />
                     </div>
                   </m.div>
                 )}
@@ -582,6 +600,14 @@ export default function Nav() {
                         )
                       })}
                     </div>
+                  </div>
+                  <div style={{ marginTop: 14 }}>
+                    <span style={labelStyle}>Cursor</span>
+                    <PillToggle
+                      options={['Motion', 'Precise']}
+                      active={cursorType === 'precise' ? 'Precise' : 'Motion'}
+                      onChange={(val) => handleCursorType(val === 'Precise' ? 'precise' : 'motion')}
+                    />
                   </div>
                 </m.div>
               )}

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false)
@@ -18,7 +18,7 @@ export default function BackToTop() {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.button
+        <m.button
           onClick={scrollToTop}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ export default function BackToTop() {
           whileTap={{ scale: 0.95 }}
         >
           ↑
-        </motion.button>
+        </m.button>
       )}
     </AnimatePresence>
   )

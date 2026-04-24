@@ -3,7 +3,6 @@ import './globals.css'
 import RootClient from '@/components/RootClient'
 import { ThemeProvider } from '@/lib/ThemeContext'
 import GlitchOverlay from '@/components/ui/GlitchOverlay'
-import BackToTop from '@/components/ui/BackToTop'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
@@ -47,10 +46,13 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${dmSans.variable} ${jetbrains.variable}`}
     >
+      <head>
+        {/* Blocking script: reads saved theme from localStorage before first paint to prevent flash */}
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('portfolio-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark')}catch(e){}` }} />
+      </head>
       <body>
         <ThemeProvider>
           <GlitchOverlay />
-          <BackToTop />
           <RootClient>{children}</RootClient>
           <Analytics />
           <SpeedInsights />

@@ -19,10 +19,7 @@ export default function ScrollReveal({
   className,
 }: ScrollRevealProps) {
   const prefersReducedMotion = useReducedMotion()
-  const shouldReduce =
-    typeof window !== 'undefined' &&
-    document.documentElement.getAttribute('data-reduced-motion') === 'true'
-  const isReduced = prefersReducedMotion || shouldReduce
+  const isReduced = prefersReducedMotion
 
   const initial = isReduced
     ? { opacity: 1, y: 0, x: 0 }

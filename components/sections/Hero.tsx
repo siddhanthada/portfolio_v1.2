@@ -64,7 +64,7 @@ const fadeIn = (delay: number) => ({
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, delay, ease: EASE } },
 })
 
-const H_SIZE        = 'clamp(2.6rem, 5.2vw, 6.8rem)'
+const H_SIZE        = 'clamp(4.5rem, 5.2vw, 6.8rem)'
 const H_SIZE_MOBILE = 'clamp(3.4rem, 14vw, 5rem)'
 
 /* ─── Char shimmer ────────────────────────────────────────────────────────── */
