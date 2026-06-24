@@ -22,13 +22,18 @@
 
 /* ─── Light Theme ────────────────────────────────────────────────────────── */
 [data-theme="light"] {
-  --bg:         #F4F1EC;
-  --bg-card:    #EAE6DF;
-  --border:     #D4CFC6;
-  --text:       #111111;
-  --muted:      #6B6660;
-  --accent:     #3D6B00;
-  --accent-ring: rgba(61,107,0,0.4);
+  /* Core semantic tokens — map to existing var names so all inline styles auto-update */
+  --bg:            #FFFFFF;   /* bg-base: hero, about, experience */
+  --bg-card:       #EFEFEF;   /* bg-muted: card surfaces, stat boxes, Q&A cards */
+  --border:        #E3E3E3;   /* border-subtle: card borders, section dividers */
+  --text:          #111111;   /* text-primary */
+  --muted:         #555555;   /* text-secondary: body copy, descriptions */
+  --accent:        #3D6B00;   /* olive green — unchanged */
+  --accent-ring:   rgba(61,107,0,0.4);
+
+  /* Extended tokens for section alternation and tertiary labels */
+  --bg-subtle:     #F7F7F7;   /* work section, philosophy, ticker strip */
+  --text-tertiary: #999999;   /* meta labels: ROLE, TEAM, TIMELINE, BFSI, EDTECH */
 }
 
 [data-theme="light"] .noise-overlay { opacity: 0.02; }
@@ -107,8 +112,32 @@ section {
   background-image: none;
 }
 
+/* Default: all sections get bg-base (white) */
 [data-theme="light"] section {
   background-color: var(--bg) !important;
+}
+
+/* Alternating sections → bg-subtle (#F7F7F7) */
+[data-theme="light"] section#work,
+[data-theme="light"] section#philosophy {
+  background-color: var(--bg-subtle) !important;
+}
+
+/* Contact section — dark background even in light theme */
+[data-theme="light"] section#contact {
+  background-color: #111111 !important;
+}
+
+
+/* Customer 360 case study page — pure white sections (overrides the default var(--bg)) */
+[data-theme="light"] .cs-white-bg section {
+  background-color: #FFFFFF !important;
+}
+
+/* Sidebar nav on case study pages — bg-subtle tint */
+[data-theme="light"] nav.cs-sidebar {
+  background-color: var(--bg-subtle);
+  border-right: 1px solid var(--border);
 }
 
 /* ─── Noise Texture ──────────────────────────────────────────────────────── */

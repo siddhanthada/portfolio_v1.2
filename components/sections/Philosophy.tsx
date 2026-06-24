@@ -23,6 +23,7 @@ const principles = [
 export default function Philosophy() {
   return (
     <section
+      id="philosophy"
       style={{
         backgroundColor: 'var(--bg)',
         borderTop: '1px solid var(--border)',

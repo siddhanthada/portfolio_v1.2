@@ -7,6 +7,7 @@ import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import ScrollReveal from '@/components/motion/ScrollReveal'
 import ImageLightbox from '@/components/ui/ImageLightbox'
 import { Lock } from 'lucide-react'
+import { useTheme } from '@/lib/ThemeContext'
 
 /* ── Nav sections ────────────────────────────────────────────────────────── */
 
@@ -245,6 +246,9 @@ export default function ChartsModernisation() {
   const [activeSection, setActiveSection] = useState('context')
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
 
   // Password gate state
   const [unlocked, setUnlocked] = useState(false)
@@ -523,6 +527,7 @@ export default function ChartsModernisation() {
             pointerEvents: navVisible ? 'all' : 'none',
           }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className="cs-sidebar"
           style={{
             position: 'fixed',
             left: 40,
@@ -530,6 +535,12 @@ export default function ChartsModernisation() {
             transform: 'translateY(-50%)',
             width: 160,
             zIndex: 50,
+            ...(isLight ? {
+              backgroundColor: 'var(--bg-subtle)',
+              border: '1px solid var(--border)',
+              borderRadius: 6,
+              padding: '16px 14px',
+            } : {}),
           }}
         >
           <span
@@ -537,7 +548,7 @@ export default function ChartsModernisation() {
               display: 'block',
               fontFamily: 'var(--font-mono, monospace)',
               fontSize: '10px',
-              color: 'var(--muted)',
+              color: isLight ? 'var(--text-tertiary)' : 'var(--muted)',
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
               marginBottom: 24,
@@ -714,7 +725,7 @@ export default function ChartsModernisation() {
                     display: 'block',
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: '10px',
-                    color: 'var(--muted)',
+                    color: isLight ? 'var(--text-tertiary)' : 'var(--muted)',
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     marginBottom: 6,

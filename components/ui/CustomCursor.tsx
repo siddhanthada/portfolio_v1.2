@@ -15,7 +15,7 @@ export default function CustomCursor() {
   const [isInteractive, setIsInteractive] = useState(false)
   const [cursorText, setCursorText] = useState<string | null>(null)
   const [isTouch, setIsTouch] = useState(true)
-  const [cursorType, setCursorType] = useState<CursorType>('motion')
+  const [cursorType, setCursorType] = useState<CursorType>('precise')
   const activeCardRef = useRef<Element | null>(null)
 
   const mouseX = useMotionValue(-100)
@@ -27,9 +27,9 @@ export default function CustomCursor() {
     if (window.matchMedia('(pointer: coarse)').matches) return
     setIsTouch(false)
 
-    // Restore saved cursor type
+    // Restore saved cursor type (default is 'precise')
     const stored = localStorage.getItem('cursor-type') as CursorType | null
-    if (stored === 'precise') setCursorType('precise')
+    if (stored === 'motion') setCursorType('motion')
 
     document.documentElement.classList.add('has-custom-cursor')
 
@@ -125,7 +125,7 @@ export default function CustomCursor() {
           >
             <path
               d={CURSOR_PATH}
-              fill={isInteractive ? 'var(--accent)' : 'var(--text)'}
+              fill="var(--accent)"
               stroke="var(--bg)"
               strokeWidth="1.5"
               strokeLinejoin="round"

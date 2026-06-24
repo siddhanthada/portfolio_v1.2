@@ -1,5 +1,7 @@
 'use client'
 
+import { useTheme } from '@/lib/ThemeContext'
+
 const STRIP_ITEMS = [
   { text: 'Fortune 100 Clients', accent: true },
   { text: 'VIT Vellore', accent: true },
@@ -43,6 +45,7 @@ function Dot() {
 }
 
 export default function WorkStrip() {
+  const { theme } = useTheme()
   const content = (
     <>
       {STRIP_ITEMS.map((item) => (
@@ -72,7 +75,7 @@ export default function WorkStrip() {
         height: 56,
         borderTop: '1px solid var(--border)',
         borderBottom: '1px solid var(--border)',
-        backgroundColor: 'var(--bg)',
+        backgroundColor: theme === 'light' ? 'var(--bg-subtle)' : 'var(--bg)',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',

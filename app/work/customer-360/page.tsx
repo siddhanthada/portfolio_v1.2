@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import ScrollReveal from '@/components/motion/ScrollReveal'
 import ImageLightbox from '@/components/ui/ImageLightbox'
+import { useTheme } from '@/lib/ThemeContext'
 
 /* ── Nav sections ────────────────────────────────────────────────────────── */
 
@@ -95,6 +96,8 @@ function Label({ children }: { children: React.ReactNode }) {
 /* ── Page ────────────────────────────────────────────────────────────────── */
 
 export default function Customer360() {
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
   const heroRef = useRef<HTMLDivElement>(null)
   const [navVisible, setNavVisible] = useState(false)
   const [showNav, setShowNav] = useState(false)
@@ -166,6 +169,11 @@ export default function Customer360() {
 
   return (
     <>
+      <style>{`
+        [data-theme="light"] .cs-white-bg section {
+          background-color: #FFFFFF !important;
+        }
+      `}</style>
 
       {/* Mobile progress bar */}
       <div
@@ -196,7 +204,7 @@ export default function Customer360() {
         className="hero-stars"
         style={{
           minHeight: '100svh',
-          backgroundColor: 'var(--bg)',
+          backgroundColor: '#FFFFFF',
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
@@ -320,7 +328,7 @@ export default function Customer360() {
                         display: 'block',
                         fontFamily: 'var(--font-mono, monospace)',
                         fontSize: '10px',
-                        color: 'var(--muted)',
+                        color: isLight ? 'var(--text-tertiary)' : 'var(--muted)',
                         letterSpacing: '0.15em',
                         textTransform: 'uppercase',
                         marginBottom: 4,
@@ -403,7 +411,7 @@ export default function Customer360() {
       </div>
 
       {/* ── BODY ──────────────────────────────────────────────────────────── */}
-      <div style={{ position: 'relative', backgroundColor: 'var(--bg)' }}>
+      <div className="cs-white-bg" style={{ position: 'relative', backgroundColor: '#FFFFFF' }}>
 
         {/* Sticky left nav — wide viewports only */}
         {showNav && (
@@ -420,6 +428,12 @@ export default function Customer360() {
             transform: 'translateY(-50%)',
             width: 160,
             zIndex: 50,
+            ...(isLight ? {
+              backgroundColor: 'var(--bg-subtle)',
+              border: '1px solid var(--border)',
+              borderRadius: 6,
+              padding: '16px 14px',
+            } : {}),
           }}
         >
           <span
@@ -427,7 +441,7 @@ export default function Customer360() {
               display: 'block',
               fontFamily: 'var(--font-mono, monospace)',
               fontSize: '10px',
-              color: 'var(--muted)',
+              color: isLight ? 'var(--text-tertiary)' : 'var(--muted)',
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
               marginBottom: 24,

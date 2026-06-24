@@ -40,8 +40,8 @@ function ExperienceRow({
   const [hovered, setHovered] = useState(false)
   const prefersReducedMotion = useReducedMotion()
   const { theme } = useTheme()
-  const hoverBg = theme === 'light' ? 'rgba(234,230,223,1)' : 'rgba(17,17,17,1)'
-  const defaultBg = theme === 'light' ? 'rgba(234,230,223,0)' : 'rgba(17,17,17,0)'
+  const hoverBg = theme === 'light' ? 'rgba(239,239,239,1)' : 'rgba(17,17,17,1)'
+  const defaultBg = theme === 'light' ? 'rgba(239,239,239,0)' : 'rgba(17,17,17,0)'
 
   return (
     <ScrollReveal delay={delay}>

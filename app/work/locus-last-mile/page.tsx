@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import ScrollReveal from '@/components/motion/ScrollReveal'
 import ImageLightbox from '@/components/ui/ImageLightbox'
+import { useTheme } from '@/lib/ThemeContext'
 
 /* ── Nav sections ────────────────────────────────────────────────────────── */
 
@@ -162,6 +163,9 @@ export default function LocusLastMile() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
 
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
+
   useEffect(() => {
     const t = setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'instant' })
@@ -254,6 +258,7 @@ export default function LocusLastMile() {
             pointerEvents: navVisible ? 'all' : 'none',
           }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
+          className="cs-sidebar"
           style={{
             position: 'fixed',
             left: 40,
@@ -261,6 +266,12 @@ export default function LocusLastMile() {
             transform: 'translateY(-50%)',
             width: 160,
             zIndex: 50,
+            ...(isLight ? {
+              backgroundColor: 'var(--bg-subtle)',
+              border: '1px solid var(--border)',
+              borderRadius: 6,
+              padding: '16px 14px',
+            } : {}),
           }}
         >
           <span
@@ -268,7 +279,7 @@ export default function LocusLastMile() {
               display: 'block',
               fontFamily: 'var(--font-mono, monospace)',
               fontSize: '10px',
-              color: 'var(--muted)',
+              color: isLight ? 'var(--text-tertiary)' : 'var(--muted)',
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
               marginBottom: 24,
@@ -401,7 +412,7 @@ export default function LocusLastMile() {
                 display: 'block',
                 fontFamily: 'var(--font-mono, monospace)',
                 fontSize: '13px',
-                color: 'var(--muted)',
+                color: isLight ? 'var(--text-tertiary)' : 'var(--muted)',
                 letterSpacing: '0.1em',
                 marginBottom: 32,
               }}
@@ -461,7 +472,7 @@ export default function LocusLastMile() {
                     display: 'block',
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: '10px',
-                    color: 'var(--muted)',
+                    color: isLight ? 'var(--text-tertiary)' : 'var(--muted)',
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     marginBottom: 6,

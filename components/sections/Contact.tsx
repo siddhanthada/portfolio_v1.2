@@ -3,12 +3,15 @@
 import { useState } from 'react'
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import ScrollReveal from '@/components/motion/ScrollReveal'
+import { useTheme } from '@/lib/ThemeContext'
 
 const EMAIL = 'hadasiddhant@gmail.com'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
   const prefersReducedMotion = useReducedMotion()
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
 
   const handleCopy = async () => {
     try {
@@ -28,17 +31,21 @@ export default function Contact() {
     }
   }
 
+  const textColor = isLight ? '#FFFFFF' : 'var(--text)'
+  const mutedColor = isLight ? 'rgba(255,255,255,0.55)' : 'var(--muted)'
+  const accentColor = isLight ? '#C8FF00' : 'var(--accent)'
+
   return (
     <section
       id="contact"
       style={{
-        backgroundColor: 'var(--bg)',
+        backgroundColor: isLight ? '#111111' : 'var(--bg)',
         minHeight: '60vh',
         display: 'flex',
         alignItems: 'center',
         paddingTop: 120,
         paddingBottom: 120,
-        borderTop: '1px solid var(--border)',
+        borderTop: isLight ? '1px solid #111111' : '1px solid var(--border)',
       }}
       className="py-20 md:py-[120px]"
     >
@@ -60,7 +67,7 @@ export default function Contact() {
               display: 'block',
               fontFamily: 'var(--font-mono, monospace)',
               fontSize: '11px',
-              color: 'var(--accent)',
+              color: accentColor,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               marginBottom: 28,
@@ -77,7 +84,7 @@ export default function Contact() {
               fontFamily: 'var(--font-display, serif)',
               fontStyle: 'italic',
               fontSize: 'clamp(2rem, 7vw, 5rem)',
-              color: 'var(--text)',
+              color: textColor,
               fontWeight: 400,
               lineHeight: 1.1,
               letterSpacing: '-0.01em',
@@ -95,7 +102,7 @@ export default function Contact() {
             style={{
               fontFamily: 'var(--font-sans, sans-serif)',
               fontSize: 'var(--text-base)',
-              color: 'var(--muted)',
+              color: mutedColor,
               lineHeight: 1.7,
               maxWidth: 480,
               marginBottom: 48,
@@ -116,7 +123,7 @@ export default function Contact() {
               style={{
                 fontFamily: 'var(--font-sans, sans-serif)',
                 fontSize: 'var(--text-xl)',
-                color: 'var(--text)',
+                color: textColor,
                 background: 'none',
                 border: 'none',
                 padding: '4px 0',
@@ -140,8 +147,8 @@ export default function Contact() {
                     top: -40,
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    backgroundColor: 'var(--accent)',
-                    color: 'var(--bg)',
+                    backgroundColor: accentColor,
+                    color: isLight ? '#111111' : 'var(--bg)',
                     padding: '5px 12px',
                     borderRadius: '100px',
                     fontSize: '12px',
@@ -173,16 +180,12 @@ export default function Contact() {
                 style={{
                   fontFamily: 'var(--font-sans, sans-serif)',
                   fontSize: 'var(--text-sm)',
-                  color: 'var(--muted)',
+                  color: mutedColor,
                   textDecoration: 'none',
                   transition: 'color 0.2s ease',
                 }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = 'var(--text)')
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = 'var(--muted)')
-                }
+                onMouseEnter={(e) => (e.currentTarget.style.color = textColor)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = mutedColor)}
               >
                 {label}
               </a>

@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useCallback, useState, type MutableRefObject } from 'react'
 import { m, useReducedMotion } from 'framer-motion'
+import Image from 'next/image'
 import MagneticButton from '@/components/ui/MagneticButton'
 import { useTheme } from '@/lib/ThemeContext'
 import { ArrowDown, ArrowUpRight, Volume2, VolumeX, Pause, Play } from 'lucide-react'
@@ -70,24 +71,33 @@ const H_SIZE_MOBILE = 'clamp(3.4rem, 14vw, 5rem)'
 /* ─── Char shimmer ────────────────────────────────────────────────────────── */
 
 function applyCharGlow(el: HTMLSpanElement, intensity: number, isAccent: boolean, entering: boolean) {
+  const isLight = typeof document !== 'undefined' &&
+    document.documentElement.getAttribute('data-theme') === 'light'
   const dur = entering ? '0.3s' : '0.6s'
-  el.style.transition = `color ${dur} ease, text-shadow ${dur} ease, transform ${dur} ease`
+  el.style.transition = `color ${dur} ease`
   if (intensity <= 0) {
     el.style.color = isAccent ? 'var(--accent)' : ''
     el.style.textShadow = ''
     el.style.transform = ''
     return
   }
-  el.style.color = isAccent ? 'var(--accent)' : '#FFFFFF'
-  el.style.transform = `scale(${1 + 0.08 * intensity})`
-  const w = (0.9 * intensity).toFixed(2)
-  const g1 = (0.4 * intensity).toFixed(2)
-  const g2 = (0.15 * intensity).toFixed(2)
-  el.style.textShadow = [
-    isAccent ? `0 0 20px rgba(200,255,0,${w})` : `0 0 20px rgba(255,255,255,${w})`,
-    `0 0 40px rgba(200,255,0,${g1})`,
-    `0 0 80px rgba(200,255,0,${g2})`,
-  ].join(', ')
+  // Light: accent color only. Dark: white glow with shadow/scale.
+  if (isLight) {
+    el.style.color = 'var(--accent)'
+    el.style.textShadow = ''
+    el.style.transform = ''
+  } else {
+    el.style.color = isAccent ? 'var(--accent)' : '#FFFFFF'
+    el.style.transform = `scale(${1 + 0.08 * intensity})`
+    const w = (0.9 * intensity).toFixed(2)
+    const g1 = (0.4 * intensity).toFixed(2)
+    const g2 = (0.15 * intensity).toFixed(2)
+    el.style.textShadow = [
+      isAccent ? `0 0 20px rgba(200,255,0,${w})` : `0 0 20px rgba(255,255,255,${w})`,
+      `0 0 40px rgba(200,255,0,${g1})`,
+      `0 0 80px rgba(200,255,0,${g2})`,
+    ].join(', ')
+  }
 }
 
 function renderChars(
@@ -150,10 +160,7 @@ export default function Hero() {
 
   const darkVideoRef  = useRef<HTMLVideoElement | null>(null)  // active dark
   const darkVideoBRef = useRef<HTMLVideoElement | null>(null)  // standby dark
-  const lightVideoRef  = useRef<HTMLVideoElement | null>(null) // active light
-  const lightVideoBRef = useRef<HTMLVideoElement | null>(null) // standby light
   const darkContainerRef = useRef<HTMLDivElement>(null)
-  const lightContainerRef = useRef<HTMLDivElement>(null)
 
   const [isMobile, setIsMobile] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
@@ -235,45 +242,35 @@ export default function Hero() {
     }
 
     setup(darkContainerRef.current,  '/work/hero-bg/sky-dark.mp4',   darkVideoRef,  darkVideoBRef,  true)
-    setup(lightContainerRef.current, '/work/hero-bg/sky-light.mp4', lightVideoRef, lightVideoBRef, false)
 
     // Cross-fade: swap active ↔ standby with overlapping opacities
     const doCrossfade = () => {
       if (crossfading) return
       crossfading = true
 
-      // Current active videos
+      // Current active dark video + standby
       const da = darkVideoRef.current
-      const la = lightVideoRef.current
-      // Standby videos
       const db = darkVideoBRef.current
-      const lb = lightVideoBRef.current
 
-      if (!da || !db || !la || !lb) { crossfading = false; return }
+      if (!da || !db) { crossfading = false; return }
 
-      // Prime standbys from frame 0 while still invisible
+      // Prime standby from frame 0 while still invisible
       db.currentTime = 0
-      lb.currentTime = 0
       db.play().catch(() => {})
-      lb.play().catch(() => {})
 
-      // Give standbys one frame to decode then start the opacity swap
+      // Give standby one frame to decode then start the opacity swap
       requestAnimationFrame(() => {
         const t = `opacity ${CROSSFADE_S}s ease`
         da.style.transition = t;  da.style.opacity = '0'
-        la.style.transition = t;  la.style.opacity = '0'
         db.style.transition = t;  db.style.opacity = '1'
-        lb.style.transition = t;  lb.style.opacity = '1'
       })
 
       setTimeout(() => {
-        // Old actives are now invisible — pause + reset them as the new standbys
+        // Old active is now invisible — pause + reset as new standby
         da.pause(); da.style.transition = 'none'; da.style.opacity = '0'; da.currentTime = 0
-        la.pause(); la.style.transition = 'none'; la.style.opacity = '0'; la.currentTime = 0
 
-        // Swap refs so the rest of the app sees the new active
+        // Swap refs
         darkVideoRef.current  = db;  darkVideoBRef.current  = da
-        lightVideoRef.current = lb;  lightVideoBRef.current = la
 
         // Re-attach playing/pause events to new active dark video
         db.addEventListener('playing', () => setIsPlaying(true))
@@ -300,8 +297,6 @@ export default function Hero() {
     return () => {
       darkVideoRef.current  = null
       darkVideoBRef.current = null
-      lightVideoRef.current  = null
-      lightVideoBRef.current = null
     }
   }, [prefersReducedMotion])
 
@@ -309,7 +304,7 @@ export default function Hero() {
   const toggleMute = useCallback(() => {
     setIsMuted(prev => {
       const next = !prev
-      ;[darkVideoRef, darkVideoBRef, lightVideoRef, lightVideoBRef].forEach(r => {
+      ;[darkVideoRef, darkVideoBRef].forEach(r => {
         if (r.current) r.current.muted = next
       })
       return next
@@ -317,15 +312,12 @@ export default function Hero() {
   }, [])
 
   const togglePlay = useCallback(() => {
-    const dark  = darkVideoRef.current
-    const light = lightVideoRef.current
+    const dark = darkVideoRef.current
     if (!dark) return
     if (dark.paused) {
-      dark?.play().catch(() => {})
-      light?.play().catch(() => {})
+      dark.play().catch(() => {})
     } else {
-      dark?.pause()
-      light?.pause()
+      dark.pause()
     }
   }, [])
 
@@ -446,28 +438,37 @@ export default function Hero() {
       onMouseLeave={handleMouseLeave}
       style={{ position: 'relative', minHeight: '100svh', backgroundColor: 'var(--bg)', overflow: 'hidden' }}
     >
-      {/* ── Dual video containers — videos injected via DOM in useEffect ────── */}
+      {/* ── Dark mode: video background (injected via DOM in useEffect) ─────── */}
       {!prefersReducedMotion && (
-        <>
-          <div
-            ref={darkContainerRef}
-            aria-hidden="true"
-            style={{
-              position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden',
-              opacity: isDark ? 1 : 0,
-              transition: 'opacity 0.8s ease',
-            }}
+        <div
+          ref={darkContainerRef}
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden',
+            opacity: isDark ? 1 : 0,
+            transition: 'opacity 0.8s ease',
+          }}
+        />
+      )}
+
+      {/* ── Light mode: static illustration background ────────────────────── */}
+      {!isDark && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden',
+            opacity: 1,
+          }}
+        >
+          <Image
+            src="/work/hero-bg/bg-illus.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
-          <div
-            ref={lightContainerRef}
-            aria-hidden="true"
-            style={{
-              position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden',
-              opacity: isDark ? 0 : 1,
-              transition: 'opacity 0.8s ease',
-            }}
-          />
-        </>
+        </div>
       )}
 
       {/* ── Video overlay — dark mode only ───────────────────────────────── */}
@@ -498,8 +499,8 @@ export default function Hero() {
       {/* ── Noise ─────────────────────────────────────────────────────────── */}
       <div className="noise-overlay" style={{ zIndex: 2 }} />
 
-      {/* ── Video controls — bottom-right, desktop only ───────────────────── */}
-      {!prefersReducedMotion && !isMobile && (
+      {/* ── Video controls — bottom-right, desktop only, dark mode only ─── */}
+      {!prefersReducedMotion && !isMobile && isDark && (
         <div style={{
           position: 'absolute', bottom: 32, right: 24, zIndex: 20,
           display: 'flex', gap: 8, alignItems: 'center',
@@ -683,14 +684,14 @@ export default function Hero() {
                 as="a"
                 href="#work"
                 style={{
-                  backgroundColor: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.28)',
-                  backdropFilter: 'blur(12px) saturate(150%)',
-                  WebkitBackdropFilter: 'blur(12px) saturate(150%)',
-                  border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(255,255,255,0.55)',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.10)' : 'transparent',
+                  backdropFilter: isDark ? 'blur(12px) saturate(150%)' : 'none',
+                  WebkitBackdropFilter: isDark ? 'blur(12px) saturate(150%)' : 'none',
+                  border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(0,0,0,0.22)',
                   color: isDark ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.8)',
                   boxShadow: isDark
                     ? '0 2px 12px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12)'
-                    : '0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.7)',
+                    : 'none',
                   transition: 'background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
                 }}
               >
@@ -729,8 +730,8 @@ export default function Hero() {
             padding: '0 20px 36px',
           }}
         >
-          {/* Video controls — right aligned, above CTAs */}
-          {!prefersReducedMotion && (
+          {/* Video controls — right aligned, above CTAs — dark mode only */}
+          {!prefersReducedMotion && isDark && (
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginBottom: 16 }}>
               <button
                 onClick={togglePlay}
@@ -770,14 +771,14 @@ export default function Hero() {
               href="#work"
               style={{
                 width: '100%', justifyContent: 'center',
-                backgroundColor: isDark ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.28)',
-                backdropFilter: 'blur(12px) saturate(150%)',
-                WebkitBackdropFilter: 'blur(12px) saturate(150%)',
-                border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(255,255,255,0.55)',
+                backgroundColor: isDark ? 'rgba(255,255,255,0.10)' : 'transparent',
+                backdropFilter: isDark ? 'blur(12px) saturate(150%)' : 'none',
+                WebkitBackdropFilter: isDark ? 'blur(12px) saturate(150%)' : 'none',
+                border: isDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(0,0,0,0.22)',
                 color: isDark ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.8)',
                 boxShadow: isDark
                   ? '0 2px 12px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12)'
-                  : '0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.7)',
+                  : 'none',
               }}
             >
               View Work <ArrowDown size={14} />

@@ -1,7 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-export default function LiveStatus() {
+type Props = { centered?: boolean }
+
+export default function LiveStatus({ centered }: Props) {
   const [time, setTime] = useState('')
   const [date, setDate] = useState('')
   const [isMobile, setIsMobile] = useState(false)
@@ -66,6 +68,36 @@ export default function LiveStatus() {
       />
     </div>
   )
+
+  // Centered vertical layout (used in hero when centered=true)
+  if (centered && !isMobile) {
+    return (
+      <div
+        suppressHydrationWarning
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 6,
+          fontFamily: 'var(--font-mono)',
+          fontSize: '10px',
+          color: 'var(--muted)',
+          letterSpacing: '0.1em',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {dot}
+          <span>Available for Senior roles</span>
+        </div>
+        <span suppressHydrationWarning>
+          Bangalore, IN&nbsp;&nbsp;·&nbsp;&nbsp;IST&nbsp;
+          <span style={{ color: 'var(--text)', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.05em' }}>
+            {time}
+          </span>
+        </span>
+      </div>
+    )
+  }
 
   if (isMobile) {
     return (
