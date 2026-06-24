@@ -478,6 +478,8 @@ export default function ChartsModernisation() {
               }}
               onKeyDown={handleKeyDown}
               placeholder="Enter password"
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               style={{
                 width: '100%',
                 height: 48,
@@ -542,24 +544,33 @@ export default function ChartsModernisation() {
             Unlock
           </button>
 
-          {/* Request access link */}
+          {/* Request access — outline button */}
           <button
             onClick={() => { setShowModal(true); setSubmitError(''); setEmailError(''); setAccessEmail(''); setAccessName('') }}
             style={{
-              marginTop: 24,
-              background: 'none',
-              border: 'none',
+              marginTop: 10,
+              width: '100%',
+              height: 44,
+              backgroundColor: 'transparent',
+              border: '1px solid var(--border)',
+              borderRadius: 2,
               cursor: 'pointer',
               fontFamily: 'var(--font-sans, sans-serif)',
               fontSize: '13px',
-              color: 'var(--accent)',
-              padding: 0,
-              transition: 'opacity 0.2s ease',
+              color: 'var(--muted)',
+              letterSpacing: '0.02em',
+              transition: 'border-color 0.2s ease, color 0.2s ease',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.75')}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = 'var(--accent)'
+              e.currentTarget.style.color = 'var(--accent)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'var(--border)'
+              e.currentTarget.style.color = 'var(--muted)'
+            }}
           >
-            Don&apos;t have the password? Request access →
+            Don&apos;t have the password? Request access
           </button>
         </div>
       </div>
