@@ -249,7 +249,7 @@ export default function Customer360() {
                 marginBottom: 16,
               }}
             >
-              Case Study 02
+              Case Study 01
             </span>
 
             <h1
@@ -1232,12 +1232,12 @@ export default function Customer360() {
               ← Back to Work
             </Link>
             <Link
-              href="/work/smart-cards"
+              href="/work/charts-modernisation"
               style={{ fontFamily: 'var(--font-sans, sans-serif)', fontSize: 'var(--text-base)', color: 'var(--muted)', textDecoration: 'none', transition: 'color 0.2s' }}
               onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
               onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
             >
-              Next Case Study → Smart Cards
+              Next Case Study → Modernising Data Visualisation
             </Link>
           </div>
         </div>

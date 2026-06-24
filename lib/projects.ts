@@ -11,24 +11,24 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: 'charts-modernisation',
-    number: '01',
-    name: 'Modernising Data Visualisation',
-    oneLiner: 'Rebuilding the visual language of enterprise planning, one chart type at a time.',
-    tags: ['Design Systems', 'Data Viz', 'Enterprise'],
-    gradient: 'linear-gradient(135deg, #0A0A1A 0%, #0D1F3C 50%, #0A0A1A 100%)',
-    accentColor: '#4A90E2',
-    href: '/work/charts-modernisation',
-  },
-  {
     slug: 'customer-360',
-    number: '02',
+    number: '01',
     name: 'Customer 360',
     oneLiner: 'Building LeadSquared\'s unified customer view from zero to shipped.',
     tags: ['Product Design', 'B2B SaaS', '0→1'],
     gradient: 'linear-gradient(135deg, #0A0A0A 0%, #1A0F0A 50%, #0A0A0A 100%)',
     accentColor: '#F97316',
     href: '/work/customer-360',
+  },
+  {
+    slug: 'charts-modernisation',
+    number: '02',
+    name: 'Modernising Data Visualisation',
+    oneLiner: 'Rebuilding the visual language of enterprise planning, one chart type at a time.',
+    tags: ['Design Systems', 'Data Viz', 'Enterprise'],
+    gradient: 'linear-gradient(135deg, #0A0A1A 0%, #0D1F3C 50%, #0A0A1A 100%)',
+    accentColor: '#4A90E2',
+    href: '/work/charts-modernisation',
   },
   {
     slug: 'smart-cards',

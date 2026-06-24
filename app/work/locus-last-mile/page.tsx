@@ -1819,7 +1819,7 @@ export default function LocusLastMile() {
           ← Back to Work
         </Link>
         <Link
-          href="/work/charts-modernisation"
+          href="/work/customer-360"
           style={{
             fontFamily: 'var(--font-sans, sans-serif)',
             fontSize: 'var(--text-base)',
@@ -1830,7 +1830,7 @@ export default function LocusLastMile() {
           onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
         >
-          Next Case Study: Modernising Data Visualisation →
+          Next Case Study: Customer 360 →
         </Link>
       </div>
 

@@ -48,7 +48,7 @@ export default function RootLayout({
     >
       <head>
         {/* Blocking script: reads saved theme from localStorage before first paint to prevent flash */}
-        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('portfolio-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark')}catch(e){}` }} />
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('portfolio-theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light')}catch(e){}` }} />
       </head>
       <body>
         <ThemeProvider>

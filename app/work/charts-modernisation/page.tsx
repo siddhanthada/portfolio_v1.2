@@ -364,7 +364,7 @@ export default function ChartsModernisation() {
               marginBottom: 16,
             }}
           >
-            Case Study 01
+            Case Study 02
           </span>
 
           <h1
@@ -637,7 +637,7 @@ export default function ChartsModernisation() {
                 marginBottom: 12,
               }}
             >
-              Case Study 01
+              Case Study 02
             </span>
           </m.div>
 
@@ -1790,7 +1790,7 @@ export default function ChartsModernisation() {
           </Link>
 
           <Link
-            href="/work/customer-360"
+            href="/work/smart-cards"
             style={{
               fontFamily: 'var(--font-mono, monospace)',
               fontSize: '12px',
@@ -1801,7 +1801,7 @@ export default function ChartsModernisation() {
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
           >
-            Next Case Study: Customer 360 →
+            Next Case Study: Smart Cards →
           </Link>
         </div>
       </div>
