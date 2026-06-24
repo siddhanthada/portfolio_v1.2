@@ -123,10 +123,6 @@ section {
   background-color: var(--bg-subtle) !important;
 }
 
-/* Contact section — dark background even in light theme */
-[data-theme="light"] section#contact {
-  background-color: #111111 !important;
-}
 
 
 /* Customer 360 case study page — pure white sections (overrides the default var(--bg)) */

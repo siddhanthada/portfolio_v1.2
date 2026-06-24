@@ -3,10 +3,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import ScrollReveal from '@/components/motion/ScrollReveal'
 import ImageLightbox from '@/components/ui/ImageLightbox'
-import { Lock } from 'lucide-react'
+import { Lock, X } from 'lucide-react'
 import { useTheme } from '@/lib/ThemeContext'
 
 /* ── Nav sections ────────────────────────────────────────────────────────── */
@@ -250,11 +251,21 @@ export default function ChartsModernisation() {
   const { theme } = useTheme()
   const isLight = theme === 'light'
 
+  const router = useRouter()
+
   // Password gate state
   const [unlocked, setUnlocked] = useState(false)
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
   const [shake, setShake] = useState(false)
+
+  // Request access modal state
+  const [showModal, setShowModal] = useState(false)
+  const [accessName, setAccessName] = useState('')
+  const [accessEmail, setAccessEmail] = useState('')
+  const [accessLoading, setAccessLoading] = useState(false)
+  const [emailError, setEmailError] = useState('')
+  const [submitError, setSubmitError] = useState('')
 
   // Check session storage on mount
   useEffect(() => {
@@ -343,9 +354,51 @@ export default function ChartsModernisation() {
     if (e.key === 'Enter') handlePasswordSubmit()
   }
 
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  const handleRequestAccess = async () => {
+    const trimmedEmail = accessEmail.trim()
+    if (!trimmedEmail) {
+      setEmailError('Please enter your email address.')
+      return
+    }
+    if (!EMAIL_RE.test(trimmedEmail)) {
+      setEmailError('Please enter a valid email address.')
+      return
+    }
+    setEmailError('')
+    setSubmitError('')
+    setAccessLoading(true)
+    try {
+      const res = await fetch('/api/request-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: trimmedEmail,
+          name: accessName.trim(),
+          page: 'Charts Modernisation / Data Visualisation',
+        }),
+      })
+      if (!res.ok) {
+        setSubmitError('Something went wrong. Please try again.')
+        setAccessLoading(false)
+        return
+      }
+    } catch {
+      setSubmitError('Something went wrong. Please try again.')
+      setAccessLoading(false)
+      return
+    }
+    setAccessLoading(false)
+    setShowModal(false)
+    sessionStorage.setItem('show_access_toast', '1')
+    router.push('/')
+  }
+
   // Password gate
   if (!unlocked) {
     return (
+      <>
       <div
         style={{
           backgroundColor: 'var(--bg)',
@@ -488,8 +541,234 @@ export default function ChartsModernisation() {
           >
             Unlock
           </button>
+
+          {/* Request access link */}
+          <button
+            onClick={() => { setShowModal(true); setSubmitError(''); setEmailError(''); setAccessEmail(''); setAccessName('') }}
+            style={{
+              marginTop: 24,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'var(--font-sans, sans-serif)',
+              fontSize: '13px',
+              color: 'var(--accent)',
+              padding: 0,
+              transition: 'opacity 0.2s ease',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.75')}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+          >
+            Don&apos;t have the password? Request access →
+          </button>
         </div>
       </div>
+
+      {/* Request Access Modal */}
+      <AnimatePresence>
+        {showModal && (
+          <>
+            {/* Backdrop */}
+            <m.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setShowModal(false)}
+              style={{
+                position: 'fixed',
+                inset: 0,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                backdropFilter: 'blur(4px)',
+                WebkitBackdropFilter: 'blur(4px)',
+                zIndex: 9998,
+              }}
+            />
+
+            {/* Modal — outer div handles centering, inner m.div handles animation */}
+            <div
+              key="modal-wrap"
+              style={{
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 'min(400px, calc(100vw - 40px))',
+                zIndex: 9999,
+              }}
+            >
+            <m.div
+              key="modal"
+              initial={{ opacity: 0, scale: 0.95, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 8 }}
+              transition={{ duration: 0.22, ease: [0.25, 1, 0.5, 1] }}
+              style={{
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                borderRadius: 12,
+                padding: '32px 28px',
+                boxShadow: '0 24px 64px rgba(0,0,0,0.25)',
+              }}
+            >
+              {/* Close */}
+              <button
+                onClick={() => setShowModal(false)}
+                style={{
+                  position: 'absolute',
+                  top: 16,
+                  right: 16,
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: 'var(--muted)',
+                  padding: 4,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 4,
+                  transition: 'color 0.15s ease',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+              >
+                <X size={16} />
+              </button>
+
+              {/* Heading */}
+              <h2
+                style={{
+                  fontFamily: 'var(--font-display, serif)',
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(1.4rem, 3vw, 1.9rem)',
+                  fontWeight: 400,
+                  color: 'var(--text)',
+                  margin: '0 0 8px',
+                  lineHeight: 1.2,
+                }}
+              >
+                Request Access
+              </h2>
+              <p
+                style={{
+                  fontFamily: 'var(--font-sans, sans-serif)',
+                  fontSize: '13px',
+                  color: 'var(--muted)',
+                  margin: '0 0 28px',
+                  lineHeight: 1.6,
+                }}
+              >
+                Leave your email and I&apos;ll get back to you.
+              </p>
+
+              {/* Name field */}
+              <div style={{ marginBottom: 12 }}>
+                <input
+                  type="text"
+                  value={accessName}
+                  onChange={(e) => setAccessName(e.target.value)}
+                  placeholder="Your name"
+                  style={{
+                    width: '100%',
+                    height: 44,
+                    backgroundColor: 'var(--bg)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 4,
+                    padding: '0 14px',
+                    fontFamily: 'var(--font-sans, sans-serif)',
+                    fontSize: '14px',
+                    color: 'var(--text)',
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => (e.target.style.borderColor = 'var(--accent)')}
+                  onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
+                />
+              </div>
+
+              {/* Email field */}
+              <div style={{ marginBottom: emailError ? 4 : 20 }}>
+                <input
+                  type="email"
+                  value={accessEmail}
+                  onChange={(e) => { setAccessEmail(e.target.value); setEmailError(''); setSubmitError('') }}
+                  placeholder="your@email.com"
+                  required
+                  style={{
+                    width: '100%',
+                    height: 44,
+                    backgroundColor: 'var(--bg)',
+                    border: `1px solid ${emailError ? '#FF6B6B' : 'var(--border)'}`,
+                    borderRadius: 4,
+                    padding: '0 14px',
+                    fontFamily: 'var(--font-sans, sans-serif)',
+                    fontSize: '14px',
+                    color: 'var(--text)',
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => { if (!emailError) e.target.style.borderColor = 'var(--accent)' }}
+                  onBlur={(e) => { if (!emailError) e.target.style.borderColor = 'var(--border)' }}
+                  onKeyDown={(e) => { if (e.key === 'Enter') handleRequestAccess() }}
+                />
+              </div>
+
+              {emailError && (
+                <p style={{
+                  fontFamily: 'var(--font-sans, sans-serif)',
+                  fontSize: '12px',
+                  color: '#FF6B6B',
+                  margin: '0 0 16px',
+                }}>
+                  {emailError}
+                </p>
+              )}
+
+              {/* Submit */}
+              <button
+                onClick={handleRequestAccess}
+                disabled={accessLoading}
+                style={{
+                  width: '100%',
+                  height: 44,
+                  backgroundColor: 'var(--accent)',
+                  color: 'var(--bg)',
+                  border: 'none',
+                  borderRadius: 4,
+                  fontFamily: 'var(--font-sans, sans-serif)',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  cursor: accessLoading ? 'not-allowed' : 'pointer',
+                  letterSpacing: '0.04em',
+                  opacity: accessLoading ? 0.7 : 1,
+                  transition: 'opacity 0.2s ease',
+                }}
+                onMouseEnter={(e) => { if (!accessLoading) e.currentTarget.style.opacity = '0.88' }}
+                onMouseLeave={(e) => { if (!accessLoading) e.currentTarget.style.opacity = '1' }}
+              >
+                {accessLoading ? 'Sending…' : 'Send Request'}
+              </button>
+
+              {submitError && (
+                <p style={{
+                  fontFamily: 'var(--font-sans, sans-serif)',
+                  fontSize: '12px',
+                  color: '#FF6B6B',
+                  margin: '12px 0 0',
+                  textAlign: 'center',
+                }}>
+                  {submitError}
+                </p>
+              )}
+            </m.div>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
+      </>
     )
   }
 

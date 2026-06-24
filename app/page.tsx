@@ -6,6 +6,7 @@ import Philosophy from '@/components/sections/Philosophy'
 import Experience from '@/components/sections/Experience'
 import Contact from '@/components/sections/Contact'
 import Footer from '@/components/sections/Footer'
+import RequestedToast from '@/components/ui/RequestedToast'
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Experience />
       <Contact />
       <Footer />
+      <RequestedToast />
     </main>
   )
 }

@@ -3,16 +3,12 @@
 import { useState } from 'react'
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import ScrollReveal from '@/components/motion/ScrollReveal'
-import { useTheme } from '@/lib/ThemeContext'
 
 const EMAIL = 'hadasiddhant@gmail.com'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
   const prefersReducedMotion = useReducedMotion()
-  const { theme } = useTheme()
-  const isLight = theme === 'light'
-
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(EMAIL)
@@ -31,21 +27,21 @@ export default function Contact() {
     }
   }
 
-  const textColor = isLight ? '#FFFFFF' : 'var(--text)'
-  const mutedColor = isLight ? 'rgba(255,255,255,0.55)' : 'var(--muted)'
-  const accentColor = isLight ? '#C8FF00' : 'var(--accent)'
+  const textColor = 'var(--text)'
+  const mutedColor = 'var(--muted)'
+  const accentColor = 'var(--accent)'
 
   return (
     <section
       id="contact"
       style={{
-        backgroundColor: isLight ? '#111111' : 'var(--bg)',
+        backgroundColor: 'var(--bg)',
         minHeight: '60vh',
         display: 'flex',
         alignItems: 'center',
         paddingTop: 120,
         paddingBottom: 120,
-        borderTop: isLight ? '1px solid #111111' : '1px solid var(--border)',
+        borderTop: '1px solid var(--border)',
       }}
       className="py-20 md:py-[120px]"
     >
@@ -148,7 +144,7 @@ export default function Contact() {
                     left: '50%',
                     transform: 'translateX(-50%)',
                     backgroundColor: accentColor,
-                    color: isLight ? '#111111' : 'var(--bg)',
+                    color: 'var(--bg)',
                     padding: '5px 12px',
                     borderRadius: '100px',
                     fontSize: '12px',
